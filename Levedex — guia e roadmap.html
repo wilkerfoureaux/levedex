@@ -1,0 +1,113 @@
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}</style><style>:root{color-scheme:light dark;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}}:root[data-theme="dark"]{color-scheme:dark;--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}:root[data-theme="light"]{color-scheme:light}@media print{:root,:root[data-theme="dark"]{color-scheme:light;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}}body{background:var(--md-bg);color:var(--md-text);max-width:720px;margin:0 auto;padding:32px;display:flex;flex-direction:column;gap:10px;font:14px/1.55 -apple-system,BlinkMacSystemFont,'SF Pro','Segoe UI',sans-serif;overflow-wrap:break-word}body>:first-child{margin-top:0}h1,h2,h3,h4,h5,h6{margin:6px 0 0;line-height:1.25;font-weight:600;text-wrap:balance}h1{font-size:1.35em}h2{font-size:1.15em;color:var(--md-muted)}h3,h4,h5,h6{font-size:1em}p,ul,ol,blockquote,table,pre,hr{margin:0}strong{font-weight:600}a{color:var(--md-link);text-decoration:none}a:hover{text-decoration:underline}ul,ol{display:flex;flex-direction:column;gap:6px;padding-left:22px}ul{list-style:disc}ol{list-style:decimal}:is(li,td,th)>*+:is(p,ul,ol,blockquote){margin-top:6px}blockquote{display:flex;flex-direction:column;gap:10px;border-left:2px solid var(--md-rule);padding-left:10px;color:var(--md-muted)}:not(pre)>code{background:var(--md-fill);padding:1px 3px;border-radius:4px;font:.92em 'SF Mono',ui-monospace,Menlo,Consolas,monospace}a>code{background:none;color:inherit}pre{background:var(--md-fill);padding:10px 12px;border-radius:6px;overflow-x:auto;font:12px/1.5 'SF Mono',ui-monospace,Menlo,Consolas,monospace;margin-block:4px}pre code{background:none;padding:0;font:inherit}table{width:100%;border-collapse:separate;border-spacing:2px;font:inherit}th,td{padding:6px 8px;border-radius:3px;text-align:left;vertical-align:top}th{background:var(--md-fill-strong);font-weight:600}td{background:var(--md-fill)}:is(th,td) :not(pre)>code{background:transparent}hr{border:0;border-top:1px solid var(--md-rule-strong);margin-block:10px}img{max-width:100%;height:auto;border-radius:4px}</style>
+</head><body>
+<h1>Levedex — guia e roadmap</h1>
+<p>Catálogo interativo de 10 cepas de levedura cervejeira, publicado como página HTML autônoma. Este documento cobre o funcionamento atual e possíveis próximos passos.</p>
+<h2>Como usar</h2>
+<p>O grid mostra um card por cepa. O único controle de interface é o botão circular (FAB) no canto inferior direito:</p>
+<ul>
+<li><strong>Filtro</strong> — Todas / Grátis / Premium.</li>
+<li><strong>Ocultar texto</strong> — remove nome, fabricante, estilo e valores numéricos, mantendo símbolo de raridade, selo grátis/premium e as barras de estatística. Serve para leitura puramente visual do catálogo.</li>
+</ul>
+<h2>Como ler um card</h2>
+<ul>
+<li><strong>Selo grátis/premium</strong> — grátis = levedura seca, disponível em qualquer loja de insumos (Fermentis, Lallemand). Premium = levedura líquida, cadeia fria, fabricantes especializados (White Labs, Wyeast, Omega, Imperial).</li>
+<li><strong>Símbolo de raridade</strong> — segue a hierarquia atual do TCG Pokémon: ● Comum, ◆ Incomum, ★ Rara, ★★ Dupla Rara, ✦ Ultra Rara, ✦✦ Rara Ilustração, ✦✦✦ Hyper Rara. O tratamento visual do card (borda, gradiente, brilho) acompanha a escala.</li>
+<li><strong>Barras de Atenuação e Floculação</strong> — valor numérico/qualitativo ao lado de cada barra.</li>
+<li><strong>Rodapé</strong> — faixa de temperatura de fermentação, tolerância a ABV, nota de caráter da cepa.</li>
+</ul>
+<h2>Cepas catalogadas</h2>
+<table>
+<thead>
+<tr>
+<th>Nº</th>
+<th>Cepa</th>
+<th>Fabricante</th>
+<th>Status</th>
+<th>Raridade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>001</td>
+<td>US-05</td>
+<td>Fermentis</td>
+<td>Grátis</td>
+<td>Comum</td>
+</tr>
+<tr>
+<td>002</td>
+<td>S-04</td>
+<td>Fermentis</td>
+<td>Grátis</td>
+<td>Comum</td>
+</tr>
+<tr>
+<td>003</td>
+<td>Nottingham</td>
+<td>Lallemand</td>
+<td>Grátis</td>
+<td>Comum</td>
+</tr>
+<tr>
+<td>004</td>
+<td>W-34/70</td>
+<td>Fermentis</td>
+<td>Grátis</td>
+<td>Incomum</td>
+</tr>
+<tr>
+<td>005</td>
+<td>WB-06</td>
+<td>Fermentis</td>
+<td>Grátis</td>
+<td>Incomum</td>
+</tr>
+<tr>
+<td>006</td>
+<td>WLP001</td>
+<td>White Labs</td>
+<td>Premium</td>
+<td>Rara</td>
+</tr>
+<tr>
+<td>007</td>
+<td>London Ale III</td>
+<td>Wyeast 1318</td>
+<td>Premium</td>
+<td>Dupla Rara</td>
+</tr>
+<tr>
+<td>008</td>
+<td>&quot;Trois&quot;</td>
+<td>Wyeast 3724</td>
+<td>Premium</td>
+<td>Ultra Rara</td>
+</tr>
+<tr>
+<td>009</td>
+<td>Hornindal</td>
+<td>Omega OYL-071</td>
+<td>Premium</td>
+<td>Rara Ilustração</td>
+</tr>
+<tr>
+<td>010</td>
+<td>Zematic</td>
+<td>Imperial B44</td>
+<td>Premium</td>
+<td>Hyper Rara</td>
+</tr>
+</tbody>
+</table>
+<h2>Roadmap (possível)</h2>
+<ul>
+<li><input disabled="" type="checkbox"> Separar os dados das cepas do HTML (JSON externo ou módulo isolado) — hoje embutidos direto no array <code>YEASTS</code>.</li>
+<li><input disabled="" type="checkbox"> Expandir o catálogo: trapistas belgas (Chimay, Westmalle), blends sour (Lacto + Brett), Ringwood (Wyeast 1187), Kölsch (Wyeast 2565).</li>
+<li><input disabled="" type="checkbox"> Persistir filtro e estado de &quot;ocultar texto&quot; por visitante (localStorage, não compartilhado entre pessoas).</li>
+<li><input disabled="" type="checkbox"> Alternância manual claro/escuro dentro do próprio FAB, complementando o <code>prefers-color-scheme</code> automático atual.</li>
+<li><input disabled="" type="checkbox"> Modo comparação: duas cepas lado a lado.</li>
+<li><input disabled="" type="checkbox"> Campo de busca por nome ou estilo, mantido dentro do FAB.</li>
+<li><input disabled="" type="checkbox"> Data de verificação por cepa, para rastrear quando a ficha técnica foi conferida pela última vez.</li>
+</ul>
+
+</body></html>
