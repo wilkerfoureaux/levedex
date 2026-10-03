@@ -99,15 +99,26 @@
 </tr>
 </tbody>
 </table>
+<h2>Dados: CRUD e importação</h2>
+<ul>
+<li><strong>Modo edição</strong> — switch no FAB. Ativo, tocar um card abre o formulário preenchido para editar ou excluir.</li>
+<li><strong>Adicionar cepa</strong> — botão no FAB, abre o mesmo formulário vazio.</li>
+<li><strong>Campos do formulário</strong> — nome, fabricante, estilo, status, raridade, atenuação (&quot;min-max&quot;), floculação (select), ABV, temperatura, nota. Nome/fabricante/estilo são obrigatórios; o resto aceita vazio.</li>
+<li><strong>Importar JSON</strong> — botão no FAB, abre um campo de texto para colar um array de objetos (mesmos campos do formulário, em inglês: <code>name</code>, <code>maker</code>, <code>style</code>, <code>status</code>, <code>tier</code>, <code>atn</code>, <code>floc</code>, <code>abv</code>, <code>temp</code>, <code>note</code>). Cada item vira uma cepa nova, numerada em sequência; não substitui o catálogo existente.</li>
+<li><strong>Persistência</strong> — ao salvar, editar, excluir ou importar, a página republica a si mesma com os dados atualizados (capacidade <code>artifact</code> do runtime de Artifacts). Qualquer pessoa com o link vê a versão mais recente ao recarregar. Sem esse mecanismo (pré-visualização, ou visualizador sem permissão de escrita), as alterações ficam só na aba aberta.</li>
+<li>Edições simultâneas de duas pessoas não são mescladas: quem publica por último vence, silenciosamente.</li>
+</ul>
 <h2>Roadmap (possível)</h2>
 <ul>
-<li><input disabled="" type="checkbox"> Separar os dados das cepas do HTML (JSON externo ou módulo isolado) — hoje embutidos direto no array <code>YEASTS</code>.</li>
+<li><input checked="" disabled="" type="checkbox"> <del>Separar os dados das cepas do HTML</del> — resolvido de outro jeito: dados seguem embutidos, mas agora editáveis in-place com persistência via publish; dispensa arquivo externo para esse fim.</li>
+<li><input checked="" disabled="" type="checkbox"> <del>Persistir filtro e estado de &quot;ocultar texto&quot;</del> — superado: o catálogo inteiro persiste agora, não só preferências de UI.</li>
 <li><input disabled="" type="checkbox"> Expandir o catálogo: trapistas belgas (Chimay, Westmalle), blends sour (Lacto + Brett), Ringwood (Wyeast 1187), Kölsch (Wyeast 2565).</li>
-<li><input disabled="" type="checkbox"> Persistir filtro e estado de &quot;ocultar texto&quot; por visitante (localStorage, não compartilhado entre pessoas).</li>
 <li><input disabled="" type="checkbox"> Alternância manual claro/escuro dentro do próprio FAB, complementando o <code>prefers-color-scheme</code> automático atual.</li>
 <li><input disabled="" type="checkbox"> Modo comparação: duas cepas lado a lado.</li>
-<li><input disabled="" type="checkbox"> Campo de busca por nome ou estilo, mantido dentro do FAB.</li>
+<li><input checked="" disabled="" type="checkbox"> <del>Campo de busca por nome ou estilo</del> — feito: campo no topo do FAB, filtra por nº, nome, fabricante, estilo e nota, sem diferenciar acentos; combina com o filtro grátis/premium.</li>
 <li><input disabled="" type="checkbox"> Data de verificação por cepa, para rastrear quando a ficha técnica foi conferida pela última vez.</li>
+<li><input disabled="" type="checkbox"> Exportar catálogo atual como JSON, simétrico à importação.</li>
+<li><input disabled="" type="checkbox"> Aviso de edição concorrente, já que a publicação mais recente vence sem aviso.</li>
 </ul>
 
 </body></html>

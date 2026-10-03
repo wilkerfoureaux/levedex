@@ -7,7 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
-<style>
+<style id="main-style">
 :root{
   box-sizing:border-box;
   padding-top:env(safe-area-inset-top,0px);
@@ -65,6 +65,7 @@ main{max-width:920px;margin:0 auto;padding:6px 18px 100px;}
 body.filter-free .card[data-status="premium"]{display:none;}
 body.filter-premium .card[data-status="free"]{display:none;}
 body.hide-labels .label-text{display:none;}
+body.edit-mode .card{cursor:pointer;outline:1px dashed var(--muted);outline-offset:2px;}
 .fab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));width:52px;height:52px;border-radius:50%;border:none;background:var(--text);color:var(--bg);font-size:20px;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer;z-index:10;}
 .fab:focus-visible,.chip:focus-visible{outline:2px solid var(--amber);outline-offset:2px;}
 .fab-panel{position:fixed;right:18px;bottom:calc(78px + env(safe-area-inset-bottom,0px));background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:10;min-width:196px;}
@@ -73,63 +74,122 @@ body.hide-labels .label-text{display:none;}
 .chip-row{display:flex;gap:6px;margin-bottom:12px;}
 .chip{flex:1;padding:7px 0;border-radius:20px;border:1px solid var(--line);background:transparent;color:var(--text);font-size:12.5px;cursor:pointer;}
 .chip.active{background:var(--text);color:var(--bg);border-color:var(--text);}
-.switch-row{display:flex;align-items:center;justify-content:space-between;font-size:13px;gap:10px;}
+.switch-row{display:flex;align-items:center;justify-content:space-between;font-size:13px;gap:10px;margin-bottom:8px;}
+.panel-btn{width:100%;text-align:left;background:transparent;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:13px;color:var(--text);cursor:pointer;margin-top:8px;}
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:19;}
+.sheet{position:fixed;left:0;right:0;bottom:0;background:var(--surface);border-radius:16px 16px 0 0;padding:16px 18px calc(16px + env(safe-area-inset-bottom,0px));z-index:20;max-height:80vh;overflow-y:auto;box-shadow:0 -8px 24px rgba(0,0,0,.25);}
+.sheet h3{font-family:'Fraunces',Georgia,serif;margin:0 0 10px;font-size:18px;}
+.sheet label{display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--muted);margin-bottom:10px;}
+.sheet input,.sheet select,.sheet textarea{font-size:14px;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-family:inherit;}
+.sheet textarea{resize:vertical;min-height:120px;}
+.sheet-msg{font-size:12px;min-height:16px;color:var(--copper);margin:4px 0 0;}
+.sheet-actions{display:flex;gap:8px;justify-content:flex-end;margin-top:8px;}
+.btn-primary{background:var(--text);color:var(--bg);border:none;border-radius:20px;padding:9px 16px;font-size:13px;cursor:pointer;}
+.btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:9px 16px;font-size:13px;cursor:pointer;}
+.search{width:100%;font-size:13px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-family:inherit;margin-bottom:10px;}
+.hint{font-size:11.5px;color:var(--muted);margin:0 0 10px;line-height:1.4;}
 </style>
 </head>
 <body>
-<header>
-  <h1>Levedex</h1>
-  <p class="sub">Catálogo de leveduras do universo cervejeiro. <span id="count">10 cepas</span> listadas.</p>
+<div id="app"></div>
+<script id="data-json" type="application/json">[{"n":"001","name":"US-05","maker":"Fermentis","style":"Ale Americana","status":"free","tier":"common","atn":[78,82],"floc":"Média","flocPct":60,"abv":"até 9%","temp":"15–24°C","note":"A cepa mais previsível do mercado."},{"n":"002","name":"S-04","maker":"Fermentis","style":"Ale Inglesa","status":"free","tier":"common","atn":[72,78],"floc":"Alta","flocPct":90,"abv":"até 9%","temp":"15–24°C","note":"Deposita rápido, clarifica sozinha."},{"n":"003","name":"Nottingham","maker":"Lallemand","style":"Ale Multiuso","status":"free","tier":"common","atn":[73,84],"floc":"Média-Alta","flocPct":75,"abv":"até 14%","temp":"10–22°C","note":"Tolera frio e álcool alto sem drama."},{"n":"004","name":"W-34/70","maker":"Fermentis","style":"Lager","status":"free","tier":"uncommon","atn":[80,84],"floc":"Média","flocPct":60,"abv":"até 10%","temp":"9–22°C","note":"Nasceu lager, fermenta quente sem reclamar."},{"n":"005","name":"WB-06","maker":"Fermentis","style":"Trigo Belga","status":"free","tier":"uncommon","atn":[75,80],"floc":"Baixa","flocPct":35,"abv":"até 9%","temp":"18–24°C","note":"Turva o copo de propósito."},{"n":"006","name":"WLP001","maker":"White Labs","style":"Ale Americana Limpa","status":"premium","tier":"rare","atn":[73,80],"floc":"Média","flocPct":55,"abv":"até 12%","temp":"20–23°C","note":"Linhagem por trás de boa parte das IPAs da Califórnia."},{"n":"007","name":"London Ale III","maker":"Wyeast 1318","style":"Ale Frutada / NEIPA","status":"premium","tier":"double-rare","atn":[71,75],"floc":"Média","flocPct":55,"abv":"até 10%","temp":"18–22°C","note":"Ésteres frutados que definiram a estética hazy."},{"n":"008","name":"\"Trois\"","maker":"Wyeast 3724","style":"Saison Belga","status":"premium","tier":"ultra-rare","atn":[75,85],"floc":"Baixa","flocPct":25,"abv":"até 12%","temp":"27–35°C+","note":"Trava sem calor — exige técnica do brewer."},{"n":"009","name":"Hornindal","maker":"Omega OYL-071","style":"Kveik Norueguês","status":"premium","tier":"illustration-rare","atn":[75,82],"floc":"Alta","flocPct":85,"abv":"até 12%","temp":"27–40°C","note":"Fermentação primária completa em 2–3 dias."},{"n":"010","name":"Zematic","maker":"Imperial B44","style":"Brettanomyces Selvagem","status":"premium","tier":"hyper-rare","atn":[85,95],"floc":"Baixa","flocPct":25,"abv":"até 11%","temp":"18–27°C","note":"Funk de longa maturação, come o que sobra."}]</script>
+<script id="main-script">
+const TIERS={common:{label:'Comum',r:'\u25CF'},uncommon:{label:'Incomum',r:'\u25C6'},rare:{label:'Rara',r:'\u2605'},'double-rare':{label:'Dupla Rara',r:'\u2605\u2605'},'ultra-rare':{label:'Ultra Rara',r:'\u2726'},'illustration-rare':{label:'Rara Ilustração',r:'\u2726\u2726'},'hyper-rare':{label:'Hyper Rara',r:'\u2726\u2726\u2726'}};
+const FLOC_MAP={'baixa':25,'média':55,'media':55,'média-alta':75,'media-alta':75,'alta':90};
+let YEASTS=JSON.parse(document.getElementById('data-json').textContent);
+
+const BODY_SHELL=`<header>
+<h1>Levedex</h1>
+<p class="sub">Catálogo de leveduras do universo cervejeiro. <span id="count">10 cepas</span> listadas.</p>
 </header>
 <main><div class="grid" id="grid"></div></main>
-<button class="fab" id="fabBtn" aria-label="Controles" aria-expanded="false">⚙</button>
+<button class="fab" id="fabBtn" aria-label="Controles" aria-expanded="false">\u2699</button>
 <div class="fab-panel" id="fabPanel" hidden>
-  <div class="chip-row" role="group" aria-label="Filtro">
-    <button class="chip active" data-filter="all">Todas</button>
-    <button class="chip" data-filter="free">Grátis</button>
-    <button class="chip" data-filter="premium">Premium</button>
-  </div>
-  <label class="switch-row">Ocultar texto <input type="checkbox" id="hideLabels"></label>
+<input type="search" class="search" id="searchBox" placeholder="Buscar cepa" autocomplete="off">
+<div class="chip-row" role="group" aria-label="Filtro">
+<button class="chip active" data-filter="all">Todas</button>
+<button class="chip" data-filter="free">Grátis</button>
+<button class="chip" data-filter="premium">Premium</button>
 </div>
-<script>
-const TIER_LABEL={common:'Comum',uncommon:'Incomum',rare:'Rara',"double-rare":'Dupla Rara',"ultra-rare":'Ultra Rara',"illustration-rare":'Rara Ilustração',"hyper-rare":'Hyper Rara'};
-const YEASTS=[
-{n:'001',name:'US-05',maker:'Fermentis',style:'Ale Americana',status:'free',tier:'common',r:'●',atn:[78,82],floc:'Média',flocPct:60,abv:'até 9%',temp:'15–24°C',note:'A cepa mais previsível do mercado.'},
-{n:'002',name:'S-04',maker:'Fermentis',style:'Ale Inglesa',status:'free',tier:'common',r:'●',atn:[72,78],floc:'Alta',flocPct:90,abv:'até 9%',temp:'15–24°C',note:'Deposita rápido, clarifica sozinha.'},
-{n:'003',name:'Nottingham',maker:'Lallemand',style:'Ale Multiuso',status:'free',tier:'common',r:'●',atn:[73,84],floc:'Média-Alta',flocPct:75,abv:'até 14%',temp:'10–22°C',note:'Tolera frio e álcool alto sem drama.'},
-{n:'004',name:'W-34/70',maker:'Fermentis',style:'Lager',status:'free',tier:'uncommon',r:'◆',atn:[80,84],floc:'Média',flocPct:60,abv:'até 10%',temp:'9–22°C',note:'Nasceu lager, fermenta quente sem reclamar.'},
-{n:'005',name:'WB-06',maker:'Fermentis',style:'Trigo Belga',status:'free',tier:'uncommon',r:'◆',atn:[75,80],floc:'Baixa',flocPct:35,abv:'até 9%',temp:'18–24°C',note:'Turva o copo de propósito.'},
-{n:'006',name:'WLP001',maker:'White Labs',style:'Ale Americana Limpa',status:'premium',tier:'rare',r:'★',atn:[73,80],floc:'Média',flocPct:55,abv:'até 12%',temp:'20–23°C',note:'Linhagem por trás de boa parte das IPAs da Califórnia.'},
-{n:'007',name:'London Ale III',maker:'Wyeast 1318',style:'Ale Frutada / NEIPA',status:'premium',tier:'double-rare',r:'★★',atn:[71,75],floc:'Média',flocPct:55,abv:'até 10%',temp:'18–22°C',note:'Ésteres frutados que definiram a estética hazy.'},
-{n:'008',name:'"Trois"',maker:'Wyeast 3724',style:'Saison Belga',status:'premium',tier:'ultra-rare',r:'✦',atn:[75,85],floc:'Baixa',flocPct:25,abv:'até 12%',temp:'27–35°C+',note:'Trava sem calor — exige técnica do brewer.'},
-{n:'009',name:'Hornindal',maker:'Omega OYL-071',style:'Kveik Norueguês',status:'premium',tier:'illustration-rare',r:'✦✦',atn:[75,82],floc:'Alta',flocPct:85,abv:'até 12%',temp:'27–40°C',note:'Fermentação primária completa em 2–3 dias.'},
-{n:'010',name:'Zematic',maker:'Imperial B44',style:'Brettanomyces Selvagem',status:'premium',tier:'hyper-rare',r:'✦✦✦',atn:[85,95],floc:'Baixa',flocPct:25,abv:'até 11%',temp:'18–27°C',note:'Funk de longa maturação, come o que sobra.'}
-];
+<label class="switch-row">Ocultar texto <input type="checkbox" id="hideLabels"></label>
+<label class="switch-row">Modo edição <input type="checkbox" id="editMode"></label>
+<button class="panel-btn" id="addBtn">+ Adicionar cepa</button>
+<button class="panel-btn" id="importBtn">Importar JSON</button>
+</div>
+<div class="overlay" id="overlay" hidden></div>
+<div class="sheet" id="formSheet" hidden>
+<h3 id="formTitle">Nova cepa</h3>
+<label>Nome<input type="text" id="fName"></label>
+<label>Fabricante<input type="text" id="fMaker"></label>
+<label>Estilo<input type="text" id="fStyle"></label>
+<label>Status<select id="fStatus"><option value="free">Grátis</option><option value="premium">Premium</option></select></label>
+<label>Raridade<select id="fTier"><option value="common">Comum</option><option value="uncommon">Incomum</option><option value="rare">Rara</option><option value="double-rare">Dupla Rara</option><option value="ultra-rare">Ultra Rara</option><option value="illustration-rare">Rara Ilustração</option><option value="hyper-rare">Hyper Rara</option></select></label>
+<label>Atenuação (ex: 78-82)<input type="text" id="fAtn" placeholder="78-82"></label>
+<label>Floculação<select id="fFloc"><option>Baixa</option><option>Média</option><option>Média-Alta</option><option>Alta</option></select></label>
+<label>ABV<input type="text" id="fAbv" placeholder="até 12%"></label>
+<label>Temperatura<input type="text" id="fTemp" placeholder="18-22°C"></label>
+<label>Nota<input type="text" id="fNote"></label>
+<p class="sheet-msg" id="formMsg"></p>
+<div class="sheet-actions">
+<button id="deleteBtn" class="btn-ghost" hidden>Excluir</button>
+<button id="cancelFormBtn" class="btn-ghost">Cancelar</button>
+<button id="saveBtn" class="btn-primary">Salvar</button>
+</div>
+</div>
+<div class="sheet" id="importSheet" hidden>
+<h3>Importar JSON</h3>
+<p class="hint">Array de objetos: name, maker, style, status (free/premium), tier, atn ("min-max"), floc, abv, temp, note. Adiciona ao catálogo atual.</p>
+<textarea id="importText" rows="8" placeholder="Cole aqui um array JSON"></textarea>
+<p class="sheet-msg" id="importMsg"></p>
+<div class="sheet-actions">
+<button id="cancelImportBtn" class="btn-ghost">Cancelar</button>
+<button id="doImportBtn" class="btn-primary">Adicionar</button>
+</div>
+</div>`;
+document.getElementById('app').innerHTML=BODY_SHELL;
+
+const grid=document.getElementById('grid'),countEl=document.getElementById('count');
+const fabBtn=document.getElementById('fabBtn'),fabPanel=document.getElementById('fabPanel');
+const hideLabels=document.getElementById('hideLabels'),editMode=document.getElementById('editMode');
+const addBtn=document.getElementById('addBtn'),importBtn=document.getElementById('importBtn');
+const overlay=document.getElementById('overlay');
+const formSheet=document.getElementById('formSheet'),formTitle=document.getElementById('formTitle');
+const fName=document.getElementById('fName'),fMaker=document.getElementById('fMaker'),fStyle=document.getElementById('fStyle');
+const fStatus=document.getElementById('fStatus'),fTier=document.getElementById('fTier'),fAtn=document.getElementById('fAtn');
+const fFloc=document.getElementById('fFloc'),fAbv=document.getElementById('fAbv'),fTemp=document.getElementById('fTemp'),fNote=document.getElementById('fNote');
+const formMsg=document.getElementById('formMsg'),deleteBtn=document.getElementById('deleteBtn'),cancelFormBtn=document.getElementById('cancelFormBtn'),saveBtn=document.getElementById('saveBtn');
+const importSheet=document.getElementById('importSheet'),importText=document.getElementById('importText'),importMsg=document.getElementById('importMsg');
+const cancelImportBtn=document.getElementById('cancelImportBtn'),doImportBtn=document.getElementById('doImportBtn');
+
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
 function card(y){
   const statusLabel=y.status==='free'?'Grátis':'Premium';
-  return `<article class="card tier-${y.tier}" data-status="${y.status}">
-    <div class="card-top">
-      <span class="dex-no">Nº ${y.n}</span>
-      <span class="badge badge-${y.status}">${statusLabel}</span>
-    </div>
-    <h2 class="name">${y.name}</h2>
-    <p class="maker label-text">${y.maker}</p>
-    <div class="type-row">
-      <span class="type-tag label-text">${y.style}</span>
-      <span class="rarity-wrap"><span class="rarity-symbol">${y.r}</span><span class="rarity-label label-text">${TIER_LABEL[y.tier]}</span></span>
-    </div>
-    <div class="stats">
-      <div class="stat-row"><span class="stat-label label-text">Atenuação</span><div class="stat-bar"><div class="stat-fill" style="width:${y.atn[1]}%"></div></div><span class="stat-val label-text">${y.atn[0]}–${y.atn[1]}%</span></div>
-      <div class="stat-row"><span class="stat-label label-text">Floculação</span><div class="stat-bar"><div class="stat-fill" style="width:${y.flocPct}%"></div></div><span class="stat-val label-text">${y.floc}</span></div>
-    </div>
-    <p class="temp label-text">${y.temp} · ABV ${y.abv}</p>
-    <p class="note label-text">${y.note}</p>
-  </article>`;
+  const t=TIERS[y.tier]||TIERS.common;
+  return `<article class="card tier-${y.tier}" data-status="${y.status}" data-n="${y.n}">
+<div class="card-top"><span class="dex-no">Nº ${y.n}</span><span class="badge badge-${y.status}">${statusLabel}</span></div>
+<h2 class="name">${esc(y.name)}</h2>
+<p class="maker label-text">${esc(y.maker)}</p>
+<div class="type-row"><span class="type-tag label-text">${esc(y.style)}</span><span class="rarity-wrap"><span class="rarity-symbol">${t.r}</span><span class="rarity-label label-text">${t.label}</span></span></div>
+<div class="stats">
+<div class="stat-row"><span class="stat-label label-text">Atenuação</span><div class="stat-bar"><div class="stat-fill" style="width:${y.atn[1]}%"></div></div><span class="stat-val label-text">${y.atn[0]}–${y.atn[1]}%</span></div>
+<div class="stat-row"><span class="stat-label label-text">Floculação</span><div class="stat-bar"><div class="stat-fill" style="width:${y.flocPct}%"></div></div><span class="stat-val label-text">${esc(y.floc)}</span></div>
+</div>
+<p class="temp label-text">${esc(y.temp)} · ABV ${esc(y.abv)}</p>
+<p class="note label-text">${esc(y.note)}</p>
+</article>`;
 }
-function render(){document.getElementById('grid').innerHTML=YEASTS.map(card).join('');}
-render();
-const fabBtn=document.getElementById('fabBtn');
-const fabPanel=document.getElementById('fabPanel');
+let query='';
+function norm(t){return String(t||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase();}
+function visible(){return query?YEASTS.filter(y=>norm([y.n,y.name,y.maker,y.style,y.note].join(' ')).includes(query)):YEASTS;}
+function render(){const l=visible();grid.innerHTML=l.length?l.map(card).join(''):'<p class="hint">Nenhuma cepa encontrada.</p>';}
+function updateCount(){
+  const active=document.querySelector('.chip.active')?.dataset.filter||'all';
+  const base=visible();const shown=active==='all'?base.length:base.filter(y=>y.status===active).length;
+  countEl.textContent=shown+' cepas'+(active==='free'?' grátis':active==='premium'?' premium':'');
+}
+render();updateCount();
+
 fabBtn.onclick=()=>{
   const willOpen=fabPanel.hasAttribute('hidden');
   if(willOpen){fabPanel.removeAttribute('hidden');}else{fabPanel.setAttribute('hidden','');}
@@ -143,13 +203,104 @@ document.querySelectorAll('.chip').forEach(chip=>{
     const f=chip.dataset.filter;
     if(f==='free')document.body.classList.add('filter-free');
     if(f==='premium')document.body.classList.add('filter-premium');
-    const shown=f==='all'?YEASTS.length:YEASTS.filter(y=>y.status===f).length;
-    document.getElementById('count').textContent=shown+' cepas'+(f==='free'?' grátis':f==='premium'?' premium':'');
+    updateCount();
   };
 });
-document.getElementById('hideLabels').onchange=(e)=>{
-  document.body.classList.toggle('hide-labels',e.target.checked);
+document.getElementById('searchBox').oninput=e=>{query=norm(e.target.value.trim());render();updateCount();};
+hideLabels.onchange=e=>document.body.classList.toggle('hide-labels',e.target.checked);
+editMode.onchange=e=>document.body.classList.toggle('edit-mode',e.target.checked);
+
+grid.addEventListener('click',e=>{
+  if(!document.body.classList.contains('edit-mode'))return;
+  const c=e.target.closest('.card');if(!c)return;
+  const y=YEASTS.find(x=>x.n===c.dataset.n);if(y)openForm(y);
+});
+
+let editingN=null;
+function nextN(){const max=YEASTS.reduce((m,y)=>Math.max(m,parseInt(y.n,10)||0),0);return String(max+1).padStart(3,'0');}
+function openForm(entry){
+  fabPanel.setAttribute('hidden','');fabBtn.setAttribute('aria-expanded','false');
+  editingN=entry?entry.n:null;
+  formTitle.textContent=entry?'Editar cepa':'Nova cepa';
+  fName.value=entry?entry.name:'';fMaker.value=entry?entry.maker:'';fStyle.value=entry?entry.style:'';
+  fStatus.value=entry?entry.status:'free';fTier.value=entry?entry.tier:'common';
+  fAtn.value=entry?(entry.atn[0]+'-'+entry.atn[1]):'';
+  fFloc.value=entry?entry.floc:'Média';fAbv.value=entry?entry.abv:'';fTemp.value=entry?entry.temp:'';fNote.value=entry?entry.note:'';
+  deleteBtn.hidden=!entry;formMsg.textContent='';
+  overlay.hidden=false;formSheet.hidden=false;
+}
+function closeForm(){overlay.hidden=true;formSheet.hidden=true;}
+addBtn.onclick=()=>openForm(null);
+cancelFormBtn.onclick=closeForm;
+
+saveBtn.onclick=async()=>{
+  const name=fName.value.trim(),maker=fMaker.value.trim(),style=fStyle.value.trim();
+  if(!name||!maker||!style){formMsg.textContent='Nome, fabricante e estilo são obrigatórios.';return;}
+  const m=fAtn.value.match(/(\d+)\D+(\d+)/);
+  const atn=m?[+m[1],+m[2]]:[0,0];
+  const floc=fFloc.value;
+  const flocPct=FLOC_MAP[floc.toLowerCase()]??55;
+  const entry={n:editingN||nextN(),name,maker,style,status:fStatus.value,tier:fTier.value,atn,floc,flocPct,abv:fAbv.value.trim(),temp:fTemp.value.trim(),note:fNote.value.trim()};
+  if(editingN){const i=YEASTS.findIndex(y=>y.n===editingN);if(i>-1)YEASTS[i]=entry;}
+  else YEASTS.push(entry);
+  closeForm();render();updateCount();
+  await persist();
 };
+deleteBtn.onclick=async()=>{
+  if(!editingN)return;
+  YEASTS=YEASTS.filter(y=>y.n!==editingN);
+  closeForm();render();updateCount();
+  await persist();
+};
+
+function normalizeEntry(raw,n){
+  const status=/premium/i.test(raw.status)?'premium':'free';
+  let tierKey='common';
+  if(raw.tier){
+    const rt=String(raw.tier).toLowerCase();
+    tierKey=Object.keys(TIERS).find(k=>k===rt)||Object.keys(TIERS).find(k=>TIERS[k].label.toLowerCase()===rt)||'common';
+  }
+  let atn=raw.atn;
+  if(typeof atn==='string'){const mm=atn.match(/(\d+)\D+(\d+)/);atn=mm?[+mm[1],+mm[2]]:[0,0];}
+  if(!Array.isArray(atn))atn=[0,0];
+  const floc=raw.floc||'Média';
+  const flocPct=raw.flocPct!=null?+raw.flocPct:(FLOC_MAP[String(floc).toLowerCase()]??55);
+  return {n:raw.n||n,name:raw.name||'Sem nome',maker:raw.maker||'',style:raw.style||'',status,tier:tierKey,atn,floc,flocPct,abv:raw.abv||'',temp:raw.temp||'',note:raw.note||''};
+}
+function openImport(){
+  fabPanel.setAttribute('hidden','');fabBtn.setAttribute('aria-expanded','false');
+  importText.value='';importMsg.textContent='';overlay.hidden=false;importSheet.hidden=false;
+}
+function closeImport(){overlay.hidden=true;importSheet.hidden=true;}
+importBtn.onclick=openImport;
+cancelImportBtn.onclick=closeImport;
+overlay.onclick=()=>{closeForm();closeImport();};
+
+doImportBtn.onclick=async()=>{
+  let arr;
+  try{arr=JSON.parse(importText.value);}catch(e){importMsg.textContent='JSON inválido.';return;}
+  if(!Array.isArray(arr)||arr.length===0){importMsg.textContent='Esperado um array de objetos.';return;}
+  let n=nextN();
+  arr.forEach(raw=>{YEASTS.push(normalizeEntry(raw,n));n=String(+n+1).padStart(3,'0');});
+  render();updateCount();importText.value='';
+  importMsg.textContent=arr.length+' cepa(s) adicionada(s).';
+  await persist();
+};
+
+function buildDoc(yeasts){
+  const styleTxt=document.getElementById('main-style').textContent;
+  const scriptTxt=document.getElementById('main-script').textContent;
+  const head='<meta charset="UTF-8">\n<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n<title>Levedex</title>\n<link rel="preconnect" href="https://fonts.googleapis.com">\n<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">\n<style id="main-style">'+styleTxt+'</style>';
+  const dataJson=JSON.stringify(yeasts).replace(/<\//g,'<\\/');
+  return '<!DOCTYPE html>\n<html lang="pt-BR">\n<head>\n'+head+'\n</head>\n<body>\n<div id="app"></div>\n<script id="data-json" type="application/json">'+dataJson+'<'+'/script>\n<script id="main-script">'+scriptTxt+'<'+'/script>\n</body>\n</html>';
+}
+async function persist(){
+  if(!window.claude)return;
+  let art;
+  try{art=await window.claude.use('artifact');}catch(e){art=null;}
+  if(!art)return;
+  try{await art.publish(buildDoc(YEASTS));}catch(e){/* conflict is routine; not_granted means read-only viewer */}
+}
 </script>
 </body>
 </html>
