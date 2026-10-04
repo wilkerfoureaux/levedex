@@ -68,7 +68,7 @@ body.hide-labels .label-text{display:none;}
 body.edit-mode .card{cursor:pointer;outline:1px dashed var(--muted);outline-offset:2px;}
 .fab{position:fixed;right:18px;bottom:calc(18px + env(safe-area-inset-bottom,0px));width:52px;height:52px;border-radius:50%;border:none;background:var(--text);color:var(--bg);font-size:20px;box-shadow:0 4px 14px rgba(0,0,0,.25);cursor:pointer;z-index:10;}
 .fab:focus-visible,.chip:focus-visible{outline:2px solid var(--amber);outline-offset:2px;}
-.fab-panel{position:fixed;right:18px;bottom:calc(78px + env(safe-area-inset-bottom,0px));background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:10;min-width:196px;}
+.fab-panel{position:fixed;right:18px;bottom:calc(78px + env(safe-area-inset-bottom,0px));background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px;box-shadow:0 8px 24px rgba(0,0,0,.2);z-index:10;min-width:196px;max-height:calc(100vh - 110px);overflow-y:auto;}
 @media (prefers-reduced-motion:no-preference){.fab-panel{animation:pop .15s ease-out;}}
 @keyframes pop{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
 .chip-row{display:flex;gap:6px;margin-bottom:12px;}
@@ -102,6 +102,9 @@ body.edit-mode .card{cursor:pointer;outline:1px dashed var(--muted);outline-offs
 .d-grid dt{font-size:11px;color:var(--muted);}
 .d-grid dd{margin:2px 0 0;font-size:13px;}
 .d-note{font-size:13px;line-height:1.5;border-left:3px solid var(--amber);padding-left:10px;margin:8px 0 12px;}
+.about{margin-top:10px;font-size:13px;}
+.about summary{cursor:pointer;color:var(--muted);padding:4px 0;}
+.about a{display:block;color:var(--text);padding:6px 0;text-decoration:underline;text-underline-offset:3px;word-break:break-all;}
 .hint{font-size:11.5px;color:var(--muted);margin:0 0 10px;line-height:1.4;}
 </style>
 </head>
@@ -131,6 +134,7 @@ const BODY_SHELL=`<header>
 <label class="switch-row">Modo edição <input type="checkbox" id="editMode"></label>
 <button class="panel-btn" id="addBtn">+ Adicionar cepa</button>
 <button class="panel-btn" id="importBtn">Importar JSON</button>
+<details class="about"><summary>Sobre</summary><a href="https://www.instagram.com/softbrewers/" target="_blank" rel="noopener noreferrer">Instagram @softbrewers</a><a href="https://wilker.dev" target="_blank" rel="noopener noreferrer">wilker.dev</a><a href="https://levedex.vercel.app" target="_blank" rel="noopener noreferrer">levedex.vercel.app</a></details>
 </div>
 <div class="overlay" id="overlay" hidden></div>
 <div class="sheet modal" id="detailModal" hidden></div>
