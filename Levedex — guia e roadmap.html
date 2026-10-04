@@ -13,7 +13,8 @@
 <li><strong>Selo grátis/premium</strong> — grátis = levedura seca, disponível em qualquer loja de insumos (Fermentis, Lallemand). Premium = levedura líquida, cadeia fria, fabricantes especializados (White Labs, Wyeast, Omega, Imperial).</li>
 <li><strong>Símbolo de raridade</strong> — segue a hierarquia atual do TCG Pokémon: ● Comum, ◆ Incomum, ★ Rara, ★★ Dupla Rara, ✦ Ultra Rara, ✦✦ Rara Ilustração, ✦✦✦ Hyper Rara. O tratamento visual do card (borda, gradiente, brilho) acompanha a escala.</li>
 <li><strong>Barras de Atenuação e Floculação</strong> — valor numérico/qualitativo ao lado de cada barra.</li>
-<li><strong>Rodapé</strong> — faixa de temperatura de fermentação, tolerância a ABV, nota de caráter da cepa.</li>
+<li><strong>Modal de detalhes</strong> — tocar num card (com o Modo edição desligado) abre o modal com ilustração, estatísticas, temperatura, tolerância a ABV e nota; as setas navegam entre as cepas visíveis e Editar abre o formulário.</li>
+<li><strong>Ilustração</strong> — desenhada em SVG conforme o tipo (sachê para grátis, tubo para premium) e colorida por categoria de estilo. O formulário aceita uma URL de imagem https opcional (campo <code>img</code> no JSON); a página publicada no Claude bloqueia imagens externas, então nela vale o desenho.</li>
 </ul>
 <h2>Cepas catalogadas</h2>
 <table>
@@ -104,7 +105,7 @@
 <li><strong>Modo edição</strong> — switch no FAB. Ativo, tocar um card abre o formulário preenchido para editar ou excluir.</li>
 <li><strong>Adicionar cepa</strong> — botão no FAB, abre o mesmo formulário vazio.</li>
 <li><strong>Campos do formulário</strong> — nome, fabricante, estilo, status, raridade, atenuação (&quot;min-max&quot;), floculação (select), ABV, temperatura, nota. Nome/fabricante/estilo são obrigatórios; o resto aceita vazio.</li>
-<li><strong>Importar JSON</strong> — botão no FAB, abre um campo de texto para colar um array de objetos (mesmos campos do formulário, em inglês: <code>name</code>, <code>maker</code>, <code>style</code>, <code>status</code>, <code>tier</code>, <code>atn</code>, <code>floc</code>, <code>abv</code>, <code>temp</code>, <code>note</code>). Cada item vira uma cepa nova, numerada em sequência; não substitui o catálogo existente.</li>
+<li><strong>Importar JSON</strong> — botão no FAB, abre um campo de texto para colar um array de objetos (mesmos campos do formulário, em inglês: <code>name</code>, <code>maker</code>, <code>style</code>, <code>status</code>, <code>tier</code>, <code>atn</code>, <code>floc</code>, <code>abv</code>, <code>temp</code>, <code>note</code>). Cada item vira uma cepa nova, numerada em sequência; não substitui o catálogo existente. Itens com mesmo nome e fabricante de uma cepa já existente são ignorados. O botão &quot;Preencher com as 29 cepas mapeadas&quot; cola no campo o lote conhecido (cepas 011 a 039) para revisão antes de adicionar.</li>
 <li><strong>Persistência</strong> — ao salvar, editar, excluir ou importar, a página republica a si mesma com os dados atualizados (capacidade <code>artifact</code> do runtime de Artifacts). Qualquer pessoa com o link vê a versão mais recente ao recarregar. Sem esse mecanismo (pré-visualização, ou visualizador sem permissão de escrita), as alterações ficam só na aba aberta.</li>
 <li>Edições simultâneas de duas pessoas não são mescladas: quem publica por último vence, silenciosamente.</li>
 </ul>

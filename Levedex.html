@@ -30,13 +30,13 @@ html{scroll-padding-top:env(safe-area-inset-top,0px);}
   --line:#34291A; --amber:#D9A62E; --copper:#C97C3D; --gold1:#F5D67B; --gold2:#C97C3D;
   --free:#7A9B52; --premium:#C97C3D;
 }
-body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-font-smoothing:antialiased;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;-webkit-font-smoothing:antialiased;}
 header{padding:28px 18px 14px;max-width:920px;margin:0 auto;}
 h1{font-family:'Fraunces',Georgia,serif;font-weight:700;font-size:clamp(28px,7vw,40px);margin:0 0 6px;letter-spacing:-0.01em;}
 .sub{margin:0;color:var(--muted);font-size:14px;line-height:1.5;}
 main{max-width:920px;margin:0 auto;padding:6px 18px 100px;}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(158px,1fr));gap:10px;}
-.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px;display:flex;flex-direction:column;gap:7px;}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(150px,100%),1fr));gap:10px;}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:13px;display:flex;flex-direction:column;gap:7px;min-width:0;overflow-wrap:anywhere;}
 .card-top{display:flex;justify-content:space-between;align-items:center;}
 .dex-no{font-family:'Fraunces',Georgia,serif;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums;}
 .badge{font-size:11px;padding:2px 8px;border-radius:20px;font-weight:600;}
@@ -44,17 +44,17 @@ main{max-width:920px;margin:0 auto;padding:6px 18px 100px;}
 .badge-premium{background:color-mix(in srgb, var(--premium) 18%, transparent);color:var(--premium);}
 .name{font-family:'Fraunces',Georgia,serif;font-size:19px;margin:0;line-height:1.15;}
 .maker{margin:0;font-size:12.5px;color:var(--muted);}
-.type-row{display:flex;justify-content:space-between;align-items:center;margin-top:2px;gap:6px;}
+.type-row{display:flex;flex-direction:column;align-items:flex-start;margin-top:2px;gap:4px;}
 .type-tag{font-size:12px;color:var(--muted);}
-.rarity-wrap{display:flex;align-items:center;gap:5px;flex-shrink:0;}
+.rarity-wrap{display:flex;align-items:center;gap:5px;flex-wrap:wrap;}
 .rarity-symbol{font-size:13px;color:var(--amber);}
 .rarity-label{font-size:11px;color:var(--muted);}
 .stats{display:flex;flex-direction:column;gap:5px;margin-top:2px;}
-.stat-row{display:flex;align-items:center;gap:7px;}
-.stat-label{font-size:11px;color:var(--muted);width:60px;flex-shrink:0;}
-.stat-bar{flex:1;height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;}
+.stat-row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:3px 6px;}
+.stat-label{font-size:11px;color:var(--muted);grid-column:1;grid-row:1;}
+.stat-bar{grid-column:1/-1;height:5px;background:var(--surface2);border-radius:3px;overflow:hidden;}
 .stat-fill{height:100%;background:var(--amber);border-radius:3px;}
-.stat-val{font-size:11px;color:var(--muted);width:56px;text-align:right;flex-shrink:0;}
+.stat-val{font-size:11px;color:var(--muted);text-align:right;grid-column:2;grid-row:1;}
 .temp{margin:0;font-size:11.5px;color:var(--muted);}
 .note{margin:2px 0 0;font-size:12px;color:var(--text);line-height:1.4;}
 .tier-rare{border-color:var(--amber);}
@@ -87,14 +87,30 @@ body.edit-mode .card{cursor:pointer;outline:1px dashed var(--muted);outline-offs
 .btn-primary{background:var(--text);color:var(--bg);border:none;border-radius:20px;padding:9px 16px;font-size:13px;cursor:pointer;}
 .btn-ghost{background:transparent;color:var(--muted);border:1px solid var(--line);border-radius:20px;padding:9px 16px;font-size:13px;cursor:pointer;}
 .search{width:100%;font-size:13px;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--bg);color:var(--text);font-family:inherit;margin-bottom:10px;}
+.card{cursor:pointer;}
+.sprite{position:relative;aspect-ratio:4/3;border-radius:10px;display:grid;place-items:center;color:var(--text);background:radial-gradient(circle at 50% 38%,color-mix(in srgb,var(--c) 45%,var(--surface2)),var(--surface2) 75%);border:1px solid color-mix(in srgb,var(--c) 40%,var(--line));overflow:hidden;}
+.sprite svg{height:84%;width:auto;}
+.sprite-img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:var(--surface2);}
+.sprite.big{aspect-ratio:16/10;}
+.type-tag,.chip-type{font-size:12px;color:var(--text);padding:2px 9px;border-radius:20px;background:color-mix(in srgb,var(--c,var(--amber)) 24%,transparent);}
+.modal{left:50%;right:auto;top:50%;bottom:auto;transform:translate(-50%,-50%);width:min(92vw,420px);border-radius:18px;padding-top:14px;}
+.d-head{display:flex;justify-content:space-between;align-items:center;margin-top:10px;}
+.d-name{font-family:'Fraunces',Georgia,serif;font-size:26px;margin:2px 0;line-height:1.1;}
+.d-chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:8px 0 12px;}
+.d-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:12px 0;}
+.d-grid div{background:var(--surface2);border-radius:10px;padding:8px 10px;}
+.d-grid dt{font-size:11px;color:var(--muted);}
+.d-grid dd{margin:2px 0 0;font-size:13px;}
+.d-note{font-size:13px;line-height:1.5;border-left:3px solid var(--amber);padding-left:10px;margin:8px 0 12px;}
 .hint{font-size:11.5px;color:var(--muted);margin:0 0 10px;line-height:1.4;}
 </style>
 </head>
 <body>
 <div id="app"></div>
-<script id="data-json" type="application/json">[{"n":"001","name":"US-05","maker":"Fermentis","style":"Ale Americana","status":"free","tier":"common","atn":[78,82],"floc":"Média","flocPct":60,"abv":"até 9%","temp":"15–24°C","note":"A cepa mais previsível do mercado."},{"n":"002","name":"S-04","maker":"Fermentis","style":"Ale Inglesa","status":"free","tier":"common","atn":[72,78],"floc":"Alta","flocPct":90,"abv":"até 9%","temp":"15–24°C","note":"Deposita rápido, clarifica sozinha."},{"n":"003","name":"Nottingham","maker":"Lallemand","style":"Ale Multiuso","status":"free","tier":"common","atn":[73,84],"floc":"Média-Alta","flocPct":75,"abv":"até 14%","temp":"10–22°C","note":"Tolera frio e álcool alto sem drama."},{"n":"004","name":"W-34/70","maker":"Fermentis","style":"Lager","status":"free","tier":"uncommon","atn":[80,84],"floc":"Média","flocPct":60,"abv":"até 10%","temp":"9–22°C","note":"Nasceu lager, fermenta quente sem reclamar."},{"n":"005","name":"WB-06","maker":"Fermentis","style":"Trigo Belga","status":"free","tier":"uncommon","atn":[75,80],"floc":"Baixa","flocPct":35,"abv":"até 9%","temp":"18–24°C","note":"Turva o copo de propósito."},{"n":"006","name":"WLP001","maker":"White Labs","style":"Ale Americana Limpa","status":"premium","tier":"rare","atn":[73,80],"floc":"Média","flocPct":55,"abv":"até 12%","temp":"20–23°C","note":"Linhagem por trás de boa parte das IPAs da Califórnia."},{"n":"007","name":"London Ale III","maker":"Wyeast 1318","style":"Ale Frutada / NEIPA","status":"premium","tier":"double-rare","atn":[71,75],"floc":"Média","flocPct":55,"abv":"até 10%","temp":"18–22°C","note":"Ésteres frutados que definiram a estética hazy."},{"n":"008","name":"\"Trois\"","maker":"Wyeast 3724","style":"Saison Belga","status":"premium","tier":"ultra-rare","atn":[75,85],"floc":"Baixa","flocPct":25,"abv":"até 12%","temp":"27–35°C+","note":"Trava sem calor — exige técnica do brewer."},{"n":"009","name":"Hornindal","maker":"Omega OYL-071","style":"Kveik Norueguês","status":"premium","tier":"illustration-rare","atn":[75,82],"floc":"Alta","flocPct":85,"abv":"até 12%","temp":"27–40°C","note":"Fermentação primária completa em 2–3 dias."},{"n":"010","name":"Zematic","maker":"Imperial B44","style":"Brettanomyces Selvagem","status":"premium","tier":"hyper-rare","atn":[85,95],"floc":"Baixa","flocPct":25,"abv":"até 11%","temp":"18–27°C","note":"Funk de longa maturação, come o que sobra."}]</script>
+<script id="data-json" type="application/json">[{"n":"001","name":"US-05","maker":"Fermentis","style":"Ale Americana","status":"free","tier":"common","atn":[78,82],"floc":"Média","flocPct":60,"abv":"até 9%","temp":"15–24°C","note":"A cepa mais previsível do mercado."},{"n":"002","name":"S-04","maker":"Fermentis","style":"Ale Inglesa","status":"free","tier":"common","atn":[72,78],"floc":"Alta","flocPct":90,"abv":"até 9%","temp":"15–24°C","note":"Deposita rápido, clarifica sozinha."},{"n":"003","name":"Nottingham","maker":"Lallemand","style":"Ale Multiuso","status":"free","tier":"common","atn":[73,84],"floc":"Média-Alta","flocPct":75,"abv":"até 14%","temp":"10–22°C","note":"Tolera frio e álcool alto sem drama."},{"n":"004","name":"W-34/70","maker":"Fermentis","style":"Lager","status":"free","tier":"uncommon","atn":[80,84],"floc":"Média","flocPct":60,"abv":"até 10%","temp":"9–22°C","note":"Nasceu lager, fermenta quente sem reclamar."},{"n":"005","name":"WB-06","maker":"Fermentis","style":"Trigo Belga","status":"free","tier":"uncommon","atn":[75,80],"floc":"Baixa","flocPct":35,"abv":"até 9%","temp":"18–24°C","note":"Turva o copo de propósito."},{"n":"006","name":"WLP001","maker":"White Labs","style":"Ale Americana Limpa","status":"premium","tier":"rare","atn":[73,80],"floc":"Média","flocPct":55,"abv":"até 12%","temp":"20–23°C","note":"Linhagem por trás de boa parte das IPAs da Califórnia."},{"n":"007","name":"London Ale III","maker":"Wyeast 1318","style":"Ale Frutada / NEIPA","status":"premium","tier":"double-rare","atn":[71,75],"floc":"Média","flocPct":55,"abv":"até 10%","temp":"18–22°C","note":"Ésteres frutados que definiram a estética hazy."},{"n":"008","name":"\"Trois\"","maker":"Wyeast 3724","style":"Saison Belga","status":"premium","tier":"ultra-rare","atn":[75,85],"floc":"Baixa","flocPct":25,"abv":"até 12%","temp":"27–35°C+","note":"Trava sem calor — exige técnica do brewer."},{"n":"009","name":"Hornindal","maker":"Omega OYL-071","style":"Kveik Norueguês","status":"premium","tier":"illustration-rare","atn":[75,82],"floc":"Alta","flocPct":85,"abv":"até 12%","temp":"27–40°C","note":"Fermentação primária completa em 2–3 dias."},{"n":"010","name":"Zematic","maker":"Imperial B44","style":"Brettanomyces Selvagem","status":"premium","tier":"hyper-rare","atn":[85,95],"floc":"Baixa","flocPct":25,"abv":"até 11%","temp":"18–27°C","note":"Funk de longa maturação, come o que sobra."},{"n":"011","name":"S-23","maker":"Fermentis","style":"Lager Alemã","status":"free","tier":"common","atn":[80,84],"floc":"Alta","flocPct":90,"abv":"até 10%","temp":"9-15°C","note":"Lager seca clássica, perfil limpo e levemente frutado."},{"n":"012","name":"K-97","maker":"Fermentis","style":"Ale Alemã","status":"free","tier":"uncommon","atn":[80,84],"floc":"Baixa","flocPct":25,"abv":"até 11%","temp":"15-22°C","note":"Limpa e seca, base de Kölsch e Alt."},{"n":"013","name":"BE-256","maker":"Fermentis","style":"Belga Abadia","status":"free","tier":"uncommon","atn":[82,86],"floc":"Alta","flocPct":90,"abv":"até 14%","temp":"15-25°C","note":"Ésteres frutados, tolera gravidade alta."},{"n":"014","name":"BE-134","maker":"Fermentis","style":"Saison","status":"free","tier":"uncommon","atn":[90,94],"floc":"Baixa","flocPct":25,"abv":"até 12%","temp":"18-28°C","note":"Atenua quase tudo, seca e especiada."},{"n":"015","name":"T-58","maker":"Fermentis","style":"Belga Especiada","status":"free","tier":"common","atn":[72,78],"floc":"Baixa","flocPct":25,"abv":"até 11%","temp":"15-24°C","note":"Pimenta e fruta discretas, fermentação rápida."},{"n":"016","name":"Windsor","maker":"Lallemand","style":"Ale Inglesa","status":"free","tier":"common","atn":[67,72],"floc":"Baixa","flocPct":25,"abv":"até 10%","temp":"15-22°C","note":"Frutada, deixa corpo e açúcar residual."},{"n":"017","name":"Belle Saison","maker":"Lallemand","style":"Saison","status":"free","tier":"uncommon","atn":[80,90],"floc":"Baixa","flocPct":25,"abv":"até 15%","temp":"20-35°C","note":"Seca como poucas, aguenta calor sem reclamar."},{"n":"018","name":"Voss Kveik","maker":"Lallemand","style":"Kveik Norueguês","status":"free","tier":"uncommon","atn":[75,82],"floc":"Alta","flocPct":90,"abv":"até 12%","temp":"25-40°C","note":"Kveik seco, fermenta quente em poucos dias, toque cítrico."},{"n":"019","name":"American Ale","maker":"Wyeast 1056","style":"Ale Americana Limpa","status":"premium","tier":"rare","atn":[73,77],"floc":"Média","flocPct":55,"abv":"até 11%","temp":"15-22°C","note":"Padrão da escola americana, neutra e versátil."},{"n":"020","name":"WLP002","maker":"White Labs","style":"Ale Inglesa","status":"premium","tier":"rare","atn":[63,70],"floc":"Alta","flocPct":90,"abv":"até 10%","temp":"18-20°C","note":"Deixa corpo e dulçor, clarifica rápido."},{"n":"021","name":"London ESB","maker":"Wyeast 1968","style":"Ale Inglesa","status":"premium","tier":"double-rare","atn":[67,71],"floc":"Alta","flocPct":90,"abv":"até 9%","temp":"18-22°C","note":"Floculação extrema, ésteres de malte e frutas."},{"n":"022","name":"German Ale","maker":"Wyeast 1007","style":"Ale Alemã","status":"premium","tier":"rare","atn":[73,77],"floc":"Baixa","flocPct":25,"abv":"até 11%","temp":"13-20°C","note":"Ale limpa fermentada fria, quase lager."},{"n":"023","name":"Weihenstephan Weizen","maker":"Wyeast 3068","style":"Weizen Bávara","status":"premium","tier":"double-rare","atn":[73,77],"floc":"Baixa","flocPct":25,"abv":"até 10%","temp":"18-24°C","note":"Banana e cravo no ponto, sensível à temperatura."},{"n":"024","name":"WLP300","maker":"White Labs","style":"Hefeweizen","status":"premium","tier":"rare","atn":[72,76],"floc":"Baixa","flocPct":25,"abv":"até 12%","temp":"20-22°C","note":"Banana e cravo marcados, turva por natureza."},{"n":"025","name":"French Saison","maker":"Wyeast 3711","style":"Saison Francesa","status":"premium","tier":"ultra-rare","atn":[77,83],"floc":"Baixa","flocPct":25,"abv":"até 12%","temp":"18-32°C","note":"Seca, apimentada, tolera calor."},{"n":"026","name":"Belgian Lambic Blend","maker":"Wyeast 3278","style":"Blend Sour Lambic","status":"premium","tier":"hyper-rare","atn":[75,85],"floc":"Baixa","flocPct":25,"abv":"até 10%","temp":"18-25°C","note":"Leveduras e bactérias juntas, maturação longa."},{"n":"027","name":"WLP530","maker":"White Labs","style":"Belga Abadia","status":"premium","tier":"double-rare","atn":[75,80],"floc":"Média","flocPct":55,"abv":"até 15%","temp":"19-22°C","note":"Frutada e especiada, aguenta dubbel e tripel."},{"n":"028","name":"Bohemian Lager","maker":"Wyeast 2124","style":"Lager Boêmia","status":"premium","tier":"rare","atn":[69,73],"floc":"Média","flocPct":55,"abv":"até 9%","temp":"8-13°C","note":"Maltada, base da pilsner tcheca."},{"n":"029","name":"Bavarian Lager","maker":"Wyeast 2206","style":"Lager Bávara","status":"premium","tier":"rare","atn":[73,77],"floc":"Média","flocPct":55,"abv":"até 9%","temp":"8-14°C","note":"Corpo de malte pleno, clássica de bock e märzen."},{"n":"030","name":"West Yorkshire","maker":"Wyeast 1469","style":"Ale Inglesa","status":"premium","tier":"double-rare","atn":[67,71],"floc":"Alta","flocPct":90,"abv":"até 9%","temp":"18-22°C","note":"Frutada e crocante, forma bom depósito."},{"n":"031","name":"Brettanomyces bruxellensis","maker":"Wyeast 5112","style":"Brett Selvagem","status":"premium","tier":"hyper-rare","atn":[85,100],"floc":"Baixa","flocPct":25,"abv":"até 11%","temp":"18-27°C","note":"Funk de curral e fruta, ação lenta ao longo de meses."},{"n":"032","name":"Scottish Ale","maker":"Wyeast 1728","style":"Ale Escocesa","status":"premium","tier":"rare","atn":[69,73],"floc":"Alta","flocPct":90,"abv":"até 12%","temp":"14-20°C","note":"Maltada e redonda, boa para ales fortes."},{"n":"033","name":"Irish Ale","maker":"Wyeast 1084","style":"Ale Irlandesa","status":"premium","tier":"rare","atn":[71,75],"floc":"Média","flocPct":55,"abv":"até 12%","temp":"16-22°C","note":"Leve toque de diacetil, clássica de stouts."},{"n":"034","name":"Belgian Witbier","maker":"Wyeast 3944","style":"Witbier","status":"premium","tier":"rare","atn":[72,76],"floc":"Baixa","flocPct":25,"abv":"até 10%","temp":"16-24°C","note":"Toque ácido e especiado, feita para trigo e coentro."},{"n":"035","name":"WLP500","maker":"White Labs","style":"Trappist Belga","status":"premium","tier":"double-rare","atn":[75,80],"floc":"Média","flocPct":55,"abv":"até 12%","temp":"19-22°C","note":"Associada à Chimay — especiada e frutada, referência do estilo trapista."},{"n":"036","name":"Trappist High Gravity","maker":"Wyeast 3787","style":"Trappist Belga (Alta Gravidade)","status":"premium","tier":"ultra-rare","atn":[78,85],"floc":"Baixa","flocPct":25,"abv":"até 15%","temp":"20-24°C","note":"Associada à Westmalle — início lento, atravessa gravidades altas sem travar."},{"n":"037","name":"Roeselare Ale Blend","maker":"Wyeast 3763","style":"Blend Sour (Lacto + Brett)","status":"premium","tier":"hyper-rare","atn":[80,100],"floc":"Baixa","flocPct":25,"abv":"até 11%","temp":"18-26°C","note":"Cultura mista com Lacto e Brett — meses de maturação até o azedume aparecer."},{"n":"038","name":"Ringwood","maker":"Wyeast 1187","style":"Ale Inglesa","status":"premium","tier":"rare","atn":[68,72],"floc":"Baixa","flocPct":25,"abv":"até 10%","temp":"18-22°C","note":"Forma cadeias que resistem a decantar — clarifica só com filtragem."},{"n":"039","name":"Kölsch","maker":"Wyeast 2565","style":"Ale Fria Alemã","status":"premium","tier":"rare","atn":[72,78],"floc":"Média-Alta","flocPct":75,"abv":"até 10%","temp":"15-18°C","note":"Fermenta frio para uma ale — limpo o bastante para imitar lager."}]</script>
 <script id="main-script">
 const TIERS={common:{label:'Comum',r:'\u25CF'},uncommon:{label:'Incomum',r:'\u25C6'},rare:{label:'Rara',r:'\u2605'},'double-rare':{label:'Dupla Rara',r:'\u2605\u2605'},'ultra-rare':{label:'Ultra Rara',r:'\u2726'},'illustration-rare':{label:'Rara Ilustração',r:'\u2726\u2726'},'hyper-rare':{label:'Hyper Rara',r:'\u2726\u2726\u2726'}};
+const KNOWN=[{"name": "S-23", "maker": "Fermentis", "style": "Lager Alemã", "status": "free", "tier": "common", "atn": "80-84", "floc": "Alta", "abv": "até 10%", "temp": "9-15°C", "note": "Lager seca clássica, perfil limpo e levemente frutado."}, {"name": "K-97", "maker": "Fermentis", "style": "Ale Alemã", "status": "free", "tier": "uncommon", "atn": "80-84", "floc": "Baixa", "abv": "até 11%", "temp": "15-22°C", "note": "Limpa e seca, base de Kölsch e Alt."}, {"name": "BE-256", "maker": "Fermentis", "style": "Belga Abadia", "status": "free", "tier": "uncommon", "atn": "82-86", "floc": "Alta", "abv": "até 14%", "temp": "15-25°C", "note": "Ésteres frutados, tolera gravidade alta."}, {"name": "BE-134", "maker": "Fermentis", "style": "Saison", "status": "free", "tier": "uncommon", "atn": "90-94", "floc": "Baixa", "abv": "até 12%", "temp": "18-28°C", "note": "Atenua quase tudo, seca e especiada."}, {"name": "T-58", "maker": "Fermentis", "style": "Belga Especiada", "status": "free", "tier": "common", "atn": "72-78", "floc": "Baixa", "abv": "até 11%", "temp": "15-24°C", "note": "Pimenta e fruta discretas, fermentação rápida."}, {"name": "Windsor", "maker": "Lallemand", "style": "Ale Inglesa", "status": "free", "tier": "common", "atn": "67-72", "floc": "Baixa", "abv": "até 10%", "temp": "15-22°C", "note": "Frutada, deixa corpo e açúcar residual."}, {"name": "Belle Saison", "maker": "Lallemand", "style": "Saison", "status": "free", "tier": "uncommon", "atn": "80-90", "floc": "Baixa", "abv": "até 15%", "temp": "20-35°C", "note": "Seca como poucas, aguenta calor sem reclamar."}, {"name": "Voss Kveik", "maker": "Lallemand", "style": "Kveik Norueguês", "status": "free", "tier": "uncommon", "atn": "75-82", "floc": "Alta", "abv": "até 12%", "temp": "25-40°C", "note": "Kveik seco, fermenta quente em poucos dias, toque cítrico."}, {"name": "American Ale", "maker": "Wyeast 1056", "style": "Ale Americana Limpa", "status": "premium", "tier": "rare", "atn": "73-77", "floc": "Média", "abv": "até 11%", "temp": "15-22°C", "note": "Padrão da escola americana, neutra e versátil."}, {"name": "WLP002", "maker": "White Labs", "style": "Ale Inglesa", "status": "premium", "tier": "rare", "atn": "63-70", "floc": "Alta", "abv": "até 10%", "temp": "18-20°C", "note": "Deixa corpo e dulçor, clarifica rápido."}, {"name": "London ESB", "maker": "Wyeast 1968", "style": "Ale Inglesa", "status": "premium", "tier": "double-rare", "atn": "67-71", "floc": "Alta", "abv": "até 9%", "temp": "18-22°C", "note": "Floculação extrema, ésteres de malte e frutas."}, {"name": "German Ale", "maker": "Wyeast 1007", "style": "Ale Alemã", "status": "premium", "tier": "rare", "atn": "73-77", "floc": "Baixa", "abv": "até 11%", "temp": "13-20°C", "note": "Ale limpa fermentada fria, quase lager."}, {"name": "Weihenstephan Weizen", "maker": "Wyeast 3068", "style": "Weizen Bávara", "status": "premium", "tier": "double-rare", "atn": "73-77", "floc": "Baixa", "abv": "até 10%", "temp": "18-24°C", "note": "Banana e cravo no ponto, sensível à temperatura."}, {"name": "WLP300", "maker": "White Labs", "style": "Hefeweizen", "status": "premium", "tier": "rare", "atn": "72-76", "floc": "Baixa", "abv": "até 12%", "temp": "20-22°C", "note": "Banana e cravo marcados, turva por natureza."}, {"name": "French Saison", "maker": "Wyeast 3711", "style": "Saison Francesa", "status": "premium", "tier": "ultra-rare", "atn": "77-83", "floc": "Baixa", "abv": "até 12%", "temp": "18-32°C", "note": "Seca, apimentada, tolera calor."}, {"name": "Belgian Lambic Blend", "maker": "Wyeast 3278", "style": "Blend Sour Lambic", "status": "premium", "tier": "hyper-rare", "atn": "75-85", "floc": "Baixa", "abv": "até 10%", "temp": "18-25°C", "note": "Leveduras e bactérias juntas, maturação longa."}, {"name": "WLP530", "maker": "White Labs", "style": "Belga Abadia", "status": "premium", "tier": "double-rare", "atn": "75-80", "floc": "Média", "abv": "até 15%", "temp": "19-22°C", "note": "Frutada e especiada, aguenta dubbel e tripel."}, {"name": "Bohemian Lager", "maker": "Wyeast 2124", "style": "Lager Boêmia", "status": "premium", "tier": "rare", "atn": "69-73", "floc": "Média", "abv": "até 9%", "temp": "8-13°C", "note": "Maltada, base da pilsner tcheca."}, {"name": "Bavarian Lager", "maker": "Wyeast 2206", "style": "Lager Bávara", "status": "premium", "tier": "rare", "atn": "73-77", "floc": "Média", "abv": "até 9%", "temp": "8-14°C", "note": "Corpo de malte pleno, clássica de bock e märzen."}, {"name": "West Yorkshire", "maker": "Wyeast 1469", "style": "Ale Inglesa", "status": "premium", "tier": "double-rare", "atn": "67-71", "floc": "Alta", "abv": "até 9%", "temp": "18-22°C", "note": "Frutada e crocante, forma bom depósito."}, {"name": "Brettanomyces bruxellensis", "maker": "Wyeast 5112", "style": "Brett Selvagem", "status": "premium", "tier": "hyper-rare", "atn": "85-100", "floc": "Baixa", "abv": "até 11%", "temp": "18-27°C", "note": "Funk de curral e fruta, ação lenta ao longo de meses."}, {"name": "Scottish Ale", "maker": "Wyeast 1728", "style": "Ale Escocesa", "status": "premium", "tier": "rare", "atn": "69-73", "floc": "Alta", "abv": "até 12%", "temp": "14-20°C", "note": "Maltada e redonda, boa para ales fortes."}, {"name": "Irish Ale", "maker": "Wyeast 1084", "style": "Ale Irlandesa", "status": "premium", "tier": "rare", "atn": "71-75", "floc": "Média", "abv": "até 12%", "temp": "16-22°C", "note": "Leve toque de diacetil, clássica de stouts."}, {"name": "Belgian Witbier", "maker": "Wyeast 3944", "style": "Witbier", "status": "premium", "tier": "rare", "atn": "72-76", "floc": "Baixa", "abv": "até 10%", "temp": "16-24°C", "note": "Toque ácido e especiado, feita para trigo e coentro."}, {"name": "WLP500", "maker": "White Labs", "style": "Trappist Belga", "status": "premium", "tier": "double-rare", "atn": "75-80", "floc": "Média", "abv": "até 12%", "temp": "19-22°C", "note": "Associada à Chimay — especiada e frutada, referência do estilo trapista."}, {"name": "Trappist High Gravity", "maker": "Wyeast 3787", "style": "Trappist Belga (Alta Gravidade)", "status": "premium", "tier": "ultra-rare", "atn": "78-85", "floc": "Baixa", "abv": "até 15%", "temp": "20-24°C", "note": "Associada à Westmalle — início lento, atravessa gravidades altas sem travar."}, {"name": "Roeselare Ale Blend", "maker": "Wyeast 3763", "style": "Blend Sour (Lacto + Brett)", "status": "premium", "tier": "hyper-rare", "atn": "80-100", "floc": "Baixa", "abv": "até 11%", "temp": "18-26°C", "note": "Cultura mista com Lacto e Brett — meses de maturação até o azedume aparecer."}, {"name": "Ringwood", "maker": "Wyeast 1187", "style": "Ale Inglesa", "status": "premium", "tier": "rare", "atn": "68-72", "floc": "Baixa", "abv": "até 10%", "temp": "18-22°C", "note": "Forma cadeias que resistem a decantar — clarifica só com filtragem."}, {"name": "Kölsch", "maker": "Wyeast 2565", "style": "Ale Fria Alemã", "status": "premium", "tier": "rare", "atn": "72-78", "floc": "Média-Alta", "abv": "até 10%", "temp": "15-18°C", "note": "Fermenta frio para uma ale — limpo o bastante para imitar lager."}];
 const FLOC_MAP={'baixa':25,'média':55,'media':55,'média-alta':75,'media-alta':75,'alta':90};
 let YEASTS=JSON.parse(document.getElementById('data-json').textContent);
 
@@ -117,6 +133,7 @@ const BODY_SHELL=`<header>
 <button class="panel-btn" id="importBtn">Importar JSON</button>
 </div>
 <div class="overlay" id="overlay" hidden></div>
+<div class="sheet modal" id="detailModal" hidden></div>
 <div class="sheet" id="formSheet" hidden>
 <h3 id="formTitle">Nova cepa</h3>
 <label>Nome<input type="text" id="fName"></label>
@@ -128,6 +145,7 @@ const BODY_SHELL=`<header>
 <label>Floculação<select id="fFloc"><option>Baixa</option><option>Média</option><option>Média-Alta</option><option>Alta</option></select></label>
 <label>ABV<input type="text" id="fAbv" placeholder="até 12%"></label>
 <label>Temperatura<input type="text" id="fTemp" placeholder="18-22°C"></label>
+<label>Imagem (URL https, opcional)<input type="url" id="fImg" placeholder="https://..."></label>
 <label>Nota<input type="text" id="fNote"></label>
 <p class="sheet-msg" id="formMsg"></p>
 <div class="sheet-actions">
@@ -139,6 +157,7 @@ const BODY_SHELL=`<header>
 <div class="sheet" id="importSheet" hidden>
 <h3>Importar JSON</h3>
 <p class="hint">Array de objetos: name, maker, style, status (free/premium), tier, atn ("min-max"), floc, abv, temp, note. Adiciona ao catálogo atual.</p>
+<button class="panel-btn" id="fillKnownBtn" type="button" style="margin:0 0 10px">Preencher com as 29 cepas mapeadas</button>
 <textarea id="importText" rows="8" placeholder="Cole aqui um array JSON"></textarea>
 <p class="sheet-msg" id="importMsg"></p>
 <div class="sheet-actions">
@@ -156,17 +175,69 @@ const overlay=document.getElementById('overlay');
 const formSheet=document.getElementById('formSheet'),formTitle=document.getElementById('formTitle');
 const fName=document.getElementById('fName'),fMaker=document.getElementById('fMaker'),fStyle=document.getElementById('fStyle');
 const fStatus=document.getElementById('fStatus'),fTier=document.getElementById('fTier'),fAtn=document.getElementById('fAtn');
-const fFloc=document.getElementById('fFloc'),fAbv=document.getElementById('fAbv'),fTemp=document.getElementById('fTemp'),fNote=document.getElementById('fNote');
+const fFloc=document.getElementById('fFloc'),fAbv=document.getElementById('fAbv'),fTemp=document.getElementById('fTemp'),fNote=document.getElementById('fNote'),fImg=document.getElementById('fImg');
 const formMsg=document.getElementById('formMsg'),deleteBtn=document.getElementById('deleteBtn'),cancelFormBtn=document.getElementById('cancelFormBtn'),saveBtn=document.getElementById('saveBtn');
 const importSheet=document.getElementById('importSheet'),importText=document.getElementById('importText'),importMsg=document.getElementById('importMsg');
 const cancelImportBtn=document.getElementById('cancelImportBtn'),doImportBtn=document.getElementById('doImportBtn');
 
 function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 
+const detailModal=document.getElementById('detailModal');
+let detailN=null;
+function cat(y){
+  const t=norm(y.style+' '+y.name);
+  if(/kveik/.test(t))return '#D4582A';
+  if(/brett|sour|blend|selvag|lambic|lacto/.test(t))return '#8A5BA8';
+  if(/trigo|weizen|wit|hefe/.test(t))return '#E4CE8A';
+  if(/belga|trapp|saison|abadia/.test(t))return '#7A9B52';
+  if(/lager|pilsner|bohem|bavar/.test(t))return '#E3C45A';
+  return '#C98A2B';
+}
+function sprite(y){
+  const c=cat(y);
+  const sw='stroke="currentColor" stroke-width="3"';
+  const inner=y.status==='free'
+    ?`<rect x="32" y="12" width="56" height="96" rx="5" fill="${c}" ${sw}/><line x1="32" y1="23" x2="88" y2="23" ${sw} stroke-dasharray="3 3"/><line x1="32" y1="97" x2="88" y2="97" ${sw} stroke-dasharray="3 3"/><rect x="40" y="38" width="40" height="44" rx="4" fill="#FFFDF8" opacity=".92"/><circle cx="57" cy="62" r="9" fill="${c}" stroke="#241C10" stroke-width="2.5"/><circle cx="69" cy="53" r="5" fill="${c}" stroke="#241C10" stroke-width="2.5"/>`
+    :`<path d="M46 56h28v36a14 14 0 0 1-14 14a14 14 0 0 1-14-14z" fill="${c}"/><path d="M46 24h28v68a14 14 0 0 1-14 14a14 14 0 0 1-14-14z" fill="#FFFDF8" fill-opacity=".22" ${sw}/><rect x="42" y="10" width="36" height="14" rx="3" fill="currentColor"/><circle cx="56" cy="80" r="4" fill="#FFFDF8" opacity=".85"/><circle cx="65" cy="91" r="3" fill="#FFFDF8" opacity=".85"/><circle cx="61" cy="67" r="3" fill="#FFFDF8" opacity=".85"/>`;
+  return `<svg viewBox="0 0 120 120" aria-hidden="true">${inner}</svg>`;
+}
+function imgTag(y){return y.img&&/^https:\/\//i.test(y.img)?`<img class="sprite-img" src="${esc(y.img)}" alt="" loading="lazy" referrerpolicy="no-referrer">`:'';}
+document.addEventListener('error',e=>{if(e.target&&e.target.tagName==='IMG'&&e.target.classList.contains('sprite-img'))e.target.remove();},true);
+function statRow(label,pct,val){return `<div class="stat-row"><span class="stat-label">${label}</span><div class="stat-bar"><div class="stat-fill" style="width:${pct}%"></div></div><span class="stat-val">${val}</span></div>`;}
+function openDetail(y){
+  detailN=y.n;
+  const t=TIERS[y.tier]||TIERS.common;
+  const st=y.status==='free'?'Grátis':'Premium';
+  detailModal.style.setProperty('--c',cat(y));
+  detailModal.innerHTML=`<div class="sprite big">${sprite(y)}${imgTag(y)}</div>
+<div class="d-head"><span class="dex-no">Nº ${y.n}</span><span class="badge badge-${y.status}">${st}</span></div>
+<h3 class="d-name">${esc(y.name)}</h3>
+<p class="maker">${esc(y.maker)}</p>
+<div class="d-chips"><span class="chip-type">${esc(y.style)}</span><span class="rarity-wrap"><span class="rarity-symbol">${t.r}</span><span class="rarity-label">${t.label}</span></span></div>
+<div class="stats">${statRow('Atenuação',y.atn[1],y.atn[0]+'–'+y.atn[1]+'%')}${statRow('Floculação',y.flocPct,esc(y.floc))}</div>
+<dl class="d-grid"><div><dt>Temperatura</dt><dd>${esc(y.temp)||'—'}</dd></div><div><dt>Tolerância ABV</dt><dd>${esc(y.abv)||'—'}</dd></div></dl>
+${y.note?`<p class="d-note">${esc(y.note)}</p>`:''}
+<div class="sheet-actions"><button class="btn-ghost" data-act="prev" aria-label="Anterior">‹</button><button class="btn-ghost" data-act="next" aria-label="Próxima">›</button><button class="btn-ghost" data-act="edit">Editar</button><button class="btn-primary" data-act="close">Fechar</button></div>`;
+  fabPanel.setAttribute('hidden','');fabBtn.setAttribute('aria-expanded','false');
+  overlay.hidden=false;detailModal.hidden=false;
+}
+function closeDetail(){overlay.hidden=true;detailModal.hidden=true;}
+detailModal.addEventListener('click',e=>{
+  const b=e.target.closest('[data-act]');if(!b)return;
+  const a=b.dataset.act;
+  if(a==='close'){closeDetail();return;}
+  const cur=YEASTS.find(x=>x.n===detailN);if(!cur)return;
+  if(a==='edit'){closeDetail();openForm(cur);return;}
+  const list=visible();if(!list.length)return;
+  const i=list.findIndex(x=>x.n===detailN);
+  const k=(i+(a==='next'?1:-1)+list.length)%list.length;
+  openDetail(list[k]);
+});
 function card(y){
   const statusLabel=y.status==='free'?'Grátis':'Premium';
   const t=TIERS[y.tier]||TIERS.common;
-  return `<article class="card tier-${y.tier}" data-status="${y.status}" data-n="${y.n}">
+  return `<article class="card tier-${y.tier}" data-status="${y.status}" data-n="${y.n}" style="--c:${cat(y)}">
+<div class="sprite">${sprite(y)}${imgTag(y)}</div>
 <div class="card-top"><span class="dex-no">Nº ${y.n}</span><span class="badge badge-${y.status}">${statusLabel}</span></div>
 <h2 class="name">${esc(y.name)}</h2>
 <p class="maker label-text">${esc(y.maker)}</p>
@@ -175,8 +246,6 @@ function card(y){
 <div class="stat-row"><span class="stat-label label-text">Atenuação</span><div class="stat-bar"><div class="stat-fill" style="width:${y.atn[1]}%"></div></div><span class="stat-val label-text">${y.atn[0]}–${y.atn[1]}%</span></div>
 <div class="stat-row"><span class="stat-label label-text">Floculação</span><div class="stat-bar"><div class="stat-fill" style="width:${y.flocPct}%"></div></div><span class="stat-val label-text">${esc(y.floc)}</span></div>
 </div>
-<p class="temp label-text">${esc(y.temp)} · ABV ${esc(y.abv)}</p>
-<p class="note label-text">${esc(y.note)}</p>
 </article>`;
 }
 let query='';
@@ -211,9 +280,9 @@ hideLabels.onchange=e=>document.body.classList.toggle('hide-labels',e.target.che
 editMode.onchange=e=>document.body.classList.toggle('edit-mode',e.target.checked);
 
 grid.addEventListener('click',e=>{
-  if(!document.body.classList.contains('edit-mode'))return;
   const c=e.target.closest('.card');if(!c)return;
-  const y=YEASTS.find(x=>x.n===c.dataset.n);if(y)openForm(y);
+  const y=YEASTS.find(x=>x.n===c.dataset.n);if(!y)return;
+  if(document.body.classList.contains('edit-mode'))openForm(y);else openDetail(y);
 });
 
 let editingN=null;
@@ -225,7 +294,7 @@ function openForm(entry){
   fName.value=entry?entry.name:'';fMaker.value=entry?entry.maker:'';fStyle.value=entry?entry.style:'';
   fStatus.value=entry?entry.status:'free';fTier.value=entry?entry.tier:'common';
   fAtn.value=entry?(entry.atn[0]+'-'+entry.atn[1]):'';
-  fFloc.value=entry?entry.floc:'Média';fAbv.value=entry?entry.abv:'';fTemp.value=entry?entry.temp:'';fNote.value=entry?entry.note:'';
+  fFloc.value=entry?entry.floc:'Média';fAbv.value=entry?entry.abv:'';fTemp.value=entry?entry.temp:'';fNote.value=entry?entry.note:'';fImg.value=entry?(entry.img||''):'';
   deleteBtn.hidden=!entry;formMsg.textContent='';
   overlay.hidden=false;formSheet.hidden=false;
 }
@@ -240,7 +309,7 @@ saveBtn.onclick=async()=>{
   const atn=m?[+m[1],+m[2]]:[0,0];
   const floc=fFloc.value;
   const flocPct=FLOC_MAP[floc.toLowerCase()]??55;
-  const entry={n:editingN||nextN(),name,maker,style,status:fStatus.value,tier:fTier.value,atn,floc,flocPct,abv:fAbv.value.trim(),temp:fTemp.value.trim(),note:fNote.value.trim()};
+  const entry={n:editingN||nextN(),name,maker,style,status:fStatus.value,tier:fTier.value,atn,floc,flocPct,abv:fAbv.value.trim(),temp:fTemp.value.trim(),note:fNote.value.trim(),img:/^https:\/\//i.test(fImg.value.trim())?fImg.value.trim():''};
   if(editingN){const i=YEASTS.findIndex(y=>y.n===editingN);if(i>-1)YEASTS[i]=entry;}
   else YEASTS.push(entry);
   closeForm();render();updateCount();
@@ -265,7 +334,7 @@ function normalizeEntry(raw,n){
   if(!Array.isArray(atn))atn=[0,0];
   const floc=raw.floc||'Média';
   const flocPct=raw.flocPct!=null?+raw.flocPct:(FLOC_MAP[String(floc).toLowerCase()]??55);
-  return {n:raw.n||n,name:raw.name||'Sem nome',maker:raw.maker||'',style:raw.style||'',status,tier:tierKey,atn,floc,flocPct,abv:raw.abv||'',temp:raw.temp||'',note:raw.note||''};
+  return {n:raw.n||n,name:raw.name||'Sem nome',maker:raw.maker||'',style:raw.style||'',status,tier:tierKey,atn,floc,flocPct,abv:raw.abv||'',temp:raw.temp||'',note:raw.note||'',img:/^https:\/\//i.test(raw.img||'')?raw.img:''};
 }
 function openImport(){
   fabPanel.setAttribute('hidden','');fabBtn.setAttribute('aria-expanded','false');
@@ -274,16 +343,26 @@ function openImport(){
 function closeImport(){overlay.hidden=true;importSheet.hidden=true;}
 importBtn.onclick=openImport;
 cancelImportBtn.onclick=closeImport;
-overlay.onclick=()=>{closeForm();closeImport();};
+overlay.onclick=()=>{closeForm();closeImport();closeDetail();};
 
+document.getElementById('fillKnownBtn').onclick=()=>{importText.value=JSON.stringify(KNOWN,null,1);importMsg.textContent=KNOWN.length+' cepas preenchidas. Revise e toque em Adicionar.';};
 doImportBtn.onclick=async()=>{
   let arr;
   try{arr=JSON.parse(importText.value);}catch(e){importMsg.textContent='JSON inválido.';return;}
   if(!Array.isArray(arr)||arr.length===0){importMsg.textContent='Esperado um array de objetos.';return;}
   let n=nextN();
-  arr.forEach(raw=>{YEASTS.push(normalizeEntry(raw,n));n=String(+n+1).padStart(3,'0');});
+  const key=y=>norm(y.name+'|'+y.maker);
+  const have=new Set(YEASTS.map(key));
+  let added=0,skipped=0;
+  arr.forEach(raw=>{
+    if(!raw||typeof raw!=='object'){skipped++;return;}
+    const e=normalizeEntry(raw,n);
+    if(have.has(key(e))){skipped++;return;}
+    have.add(key(e));YEASTS.push(e);n=String(+n+1).padStart(3,'0');added++;
+  });
+  if(!added){importMsg.textContent='Nenhuma cepa nova: '+skipped+' já existente(s) ou inválida(s).';return;}
   render();updateCount();importText.value='';
-  importMsg.textContent=arr.length+' cepa(s) adicionada(s).';
+  importMsg.textContent=added+' cepa(s) adicionada(s)'+(skipped?', '+skipped+' ignorada(s) por duplicidade.':'.');
   await persist();
 };
 
