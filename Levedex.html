@@ -112,6 +112,14 @@ body.edit-mode .card{cursor:pointer;outline:1px dashed var(--muted);outline-offs
 .photo-row{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
 .photo-prev{width:72px;height:54px;object-fit:cover;border-radius:8px;border:1px solid var(--line);cursor:pointer;}
 .toast{position:fixed;left:50%;bottom:calc(84px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--text);color:var(--bg);padding:8px 14px;border-radius:20px;font-size:13px;z-index:30;max-width:90vw;text-align:center;}
+.dial{position:fixed;right:18px;bottom:calc(78px + env(safe-area-inset-bottom,0px));display:flex;flex-direction:column;align-items:flex-end;gap:12px;z-index:10;}
+.dial-item{display:flex;align-items:center;gap:10px;}
+.dial-label{background:var(--surface);border:1px solid var(--line);color:var(--text);font-size:12.5px;padding:5px 10px;border-radius:8px;box-shadow:0 2px 8px rgba(0,0,0,.2);}
+.mini-fab{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--text);font-size:18px;display:grid;place-items:center;cursor:pointer;box-shadow:0 3px 10px rgba(0,0,0,.25);margin-right:4px;}
+.mini-fab:focus-visible{outline:2px solid var(--amber);outline-offset:2px;}
+.fab-ico{display:inline-block;font-size:28px;line-height:1;}
+@media (prefers-reduced-motion:no-preference){.dial{animation:pop .15s ease-out;}.fab-ico{transition:transform .2s;}}
+.fab[aria-expanded="true"] .fab-ico{transform:rotate(45deg);}
 .hint{font-size:11.5px;color:var(--muted);margin:0 0 10px;line-height:1.4;}
 </style>
 </head>
@@ -129,10 +137,13 @@ const BODY_SHELL=`<header>
 <p class="sub">Catálogo de leveduras do universo cervejeiro. <span id="count">10 cepas</span> listadas.</p>
 </header>
 <main><div class="grid" id="grid"></div></main>
-<button class="fab" id="fabBtn" aria-label="Controles" aria-expanded="false">\u2699</button>
+<div class="dial" id="dial" hidden>
+<div class="dial-item"><span class="dial-label">Capturar levedura</span><button class="mini-fab" id="dialCap" aria-label="Capturar levedura"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button></div>
+<div class="dial-item"><span class="dial-label">Configurações</span><button class="mini-fab" id="dialSet" aria-label="Configurações">\u2699</button></div>
+</div>
+<button class="fab" id="fabBtn" aria-label="Ações" aria-expanded="false"><span class="fab-ico">+</span></button>
 <div class="fab-panel" id="fabPanel" hidden>
 <input type="search" class="search" id="searchBox" placeholder="Buscar cepa" autocomplete="off">
-<button class="panel-btn" id="capBtn" style="margin:0 0 10px">Capturar levedura</button>
 <div class="chip-row" role="group" aria-label="Filtro">
 <button class="chip active" data-filter="all">Todas</button>
 <button class="chip" data-filter="free">Grátis</button>
@@ -257,7 +268,7 @@ detailModal.addEventListener('click',e=>{
   openDetail(list[k]);
 });
 const toastEl=document.getElementById('toast'),camInput=document.getElementById('camInput'),picInput=document.getElementById('picInput');
-const capBtn=document.getElementById('capBtn'),fPhotoBtn=document.getElementById('fPhotoBtn'),fPhotoPrev=document.getElementById('fPhotoPrev');
+const fPhotoBtn=document.getElementById('fPhotoBtn'),fPhotoPrev=document.getElementById('fPhotoPrev');
 let formPhoto='',toastT=null;
 function toast(m){toastEl.textContent=m;toastEl.hidden=false;clearTimeout(toastT);toastT=setTimeout(()=>{toastEl.hidden=true;},2800);}
 function showPrev(){if(formPhoto){fPhotoPrev.src=formPhoto;fPhotoPrev.hidden=false;}else{fPhotoPrev.removeAttribute('src');fPhotoPrev.hidden=true;}}
@@ -280,7 +291,6 @@ function shrink(file,max){
     fr.readAsDataURL(file);
   });
 }
-capBtn.onclick=()=>{fabPanel.setAttribute('hidden','');fabBtn.setAttribute('aria-expanded','false');camInput.click();};
 camInput.onchange=async e=>{
   const f=e.target.files&&e.target.files[0];e.target.value='';if(!f)return;
   let photo;
@@ -323,11 +333,15 @@ function updateCount(){
 }
 render();updateCount();
 
+const dial=document.getElementById('dial');
+function closeDial(){dial.hidden=true;if(fabPanel.hasAttribute('hidden'))fabBtn.setAttribute('aria-expanded','false');}
 fabBtn.onclick=()=>{
-  const willOpen=fabPanel.hasAttribute('hidden');
-  if(willOpen){fabPanel.removeAttribute('hidden');}else{fabPanel.setAttribute('hidden','');}
-  fabBtn.setAttribute('aria-expanded',String(willOpen));
+  if(!fabPanel.hasAttribute('hidden')){fabPanel.setAttribute('hidden','');fabBtn.setAttribute('aria-expanded','false');return;}
+  const open=dial.hidden;dial.hidden=!open;fabBtn.setAttribute('aria-expanded',String(open));
 };
+document.getElementById('dialSet').onclick=()=>{dial.hidden=true;fabPanel.removeAttribute('hidden');fabBtn.setAttribute('aria-expanded','true');};
+document.getElementById('dialCap').onclick=()=>{closeDial();camInput.click();};
+document.addEventListener('click',e=>{if(dial.hidden)return;if(!e.target.closest('#dial,#fabBtn'))closeDial();});
 document.querySelectorAll('.chip').forEach(chip=>{
   chip.onclick=()=>{
     document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
