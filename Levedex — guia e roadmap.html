@@ -107,6 +107,7 @@
 <li><strong>Adicionar cepa</strong> — botão no FAB, abre o mesmo formulário vazio.</li>
 <li><strong>Campos do formulário</strong> — nome, fabricante, estilo, status, raridade, atenuação (&quot;min-max&quot;), floculação (select), ABV, temperatura, nota. Nome/fabricante/estilo são obrigatórios; o resto aceita vazio.</li>
 <li><strong>Importar JSON</strong> — botão no FAB, abre um campo de texto para colar um array de objetos (mesmos campos do formulário, em inglês: <code>name</code>, <code>maker</code>, <code>style</code>, <code>status</code>, <code>tier</code>, <code>atn</code>, <code>floc</code>, <code>abv</code>, <code>temp</code>, <code>note</code>). Cada item vira uma cepa nova, numerada em sequência; não substitui o catálogo existente. Itens com mesmo nome e fabricante de uma cepa já existente são ignorados. O botão &quot;Preencher com as 29 cepas mapeadas&quot; cola no campo o lote conhecido (cepas 011 a 039) para revisão antes de adicionar.</li>
+<li><strong>Capturar levedura</strong> — botão no topo do FAB abre a câmera do aparelho. A foto é reduzida (até 480 px, JPEG) e vira uma entrada &quot;A conferir&quot; com nome &quot;Sem nome&quot;, sem estatísticas; o filtro &quot;A conferir&quot; no FAB lista só as pendentes. Tocar na entrada e em Editar abre o formulário com a foto; nome, fabricante e estilo são obrigatórios, e salvar remove a marca de pendente. O botão Foto do formulário troca a foto (câmera ou galeria) e tocar na miniatura remove.</li>
 <li><strong>Persistência</strong> — ao salvar, editar, excluir ou importar, a página republica a si mesma com os dados atualizados (capacidade <code>artifact</code> do runtime de Artifacts). Qualquer pessoa com o link vê a versão mais recente ao recarregar. Sem esse mecanismo (pré-visualização, ou visualizador sem permissão de escrita), as alterações ficam só na aba aberta.</li>
 <li>Edições simultâneas de duas pessoas não são mescladas: quem publica por último vence, silenciosamente.</li>
 </ul>
@@ -121,6 +122,13 @@
 <li><input disabled="" type="checkbox"> Data de verificação por cepa, para rastrear quando a ficha técnica foi conferida pela última vez.</li>
 <li><input disabled="" type="checkbox"> Exportar catálogo atual como JSON, simétrico à importação.</li>
 <li><input disabled="" type="checkbox"> Aviso de edição concorrente, já que a publicação mais recente vence sem aviso.</li>
+<li><input disabled="" type="checkbox"> Tratamento próprio para cervejas sem álcool e baixo teor: atenuação deixa de ser a métrica relevante nessas cepas (hoje entram como &quot;A conferir&quot;, sem estatísticas).</li>
+<li><input disabled="" type="checkbox"> Backend próprio (Supabase ou Firebase) para sincronizar catálogo e fotos entre aparelhos e tirar as fotos de dentro do HTML. Fora do escopo da v0.2, que segue sem backend.</li>
+</ul>
+<h2>Versões</h2>
+<ul>
+<li><strong>v0.1</strong> — catálogo de 10 cepas, filtro grátis/premium, ocultar texto, FAB.</li>
+<li><strong>v0.2</strong> — CRUD, importação em massa por JSON com botão das 29 cepas mapeadas, busca, modal de detalhes com ilustrações SVG, campo de imagem opcional, captura por foto com fila &quot;A conferir&quot;, seção Sobre e 8 cepas de cerveja sem álcool e baixo teor (com dados estimados, a conferir via issues no GitHub: Ferm LA01, WLP618, LalBrew LoNa, WLP686, WLP603, NAY, WLP4650, NEER).</li>
 </ul>
 
 </body></html>
