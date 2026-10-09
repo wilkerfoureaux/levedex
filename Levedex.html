@@ -120,6 +120,22 @@ body.edit-mode .card{cursor:pointer;outline:1px dashed var(--muted);outline-offs
 .fab-ico{display:inline-block;font-size:28px;line-height:1;}
 @media (prefers-reduced-motion:no-preference){.dial{animation:pop .15s ease-out;}.fab-ico{transition:transform .2s;}}
 .fab[aria-expanded="true"] .fab-ico{transform:rotate(45deg);}
+.hop{background:radial-gradient(circle at 50% 0%,color-mix(in srgb,#7A9B52 38%,var(--surface)),var(--surface) 70%);overflow:hidden;text-align:center;}
+.hop-bg{position:absolute;inset:0;pointer-events:none;opacity:.16;}
+.hop-bg span{position:absolute;}
+.hop-bg span:nth-child(1){left:8%;top:12%;}
+.hop-bg span:nth-child(2){right:10%;top:34%;}
+.hop-bg span:nth-child(3){left:18%;bottom:6%;}
+.hop-hero,.hop-title,.hop-lead,.hop-nerd,.hop-bar,.hop .sheet-actions{position:relative;}
+.hop-hero{display:grid;place-items:center;margin:6px 0 4px;}
+.hop-title{font-family:'Fraunces',Georgia,serif;font-size:34px;margin:0;letter-spacing:-0.01em;}
+.hop-lead{font-size:16px;line-height:1.45;margin:8px 0 10px;font-weight:600;}
+.hop-nerd{font-size:13px;line-height:1.5;color:var(--muted);margin:0 0 14px;}
+.hop-bar{height:6px;border-radius:3px;background:var(--surface2);overflow:hidden;margin:0 8px 14px;}
+.hop-bar span{display:block;height:100%;width:60%;background:linear-gradient(90deg,#7A9B52,var(--amber));border-radius:3px;}
+.hop .sheet-actions{justify-content:center;}
+@keyframes drift{from{transform:translateY(-6px) rotate(-4deg);}to{transform:translateY(6px) rotate(4deg);}}
+@media (prefers-reduced-motion:no-preference){.hop-bg span{animation:drift 7s ease-in-out infinite alternate;}.hop-bg span:nth-child(2){animation-duration:9s;}.hop-bg span:nth-child(3){animation-duration:11s;}.hop-hero svg{animation:drift 4s ease-in-out infinite alternate;}}
 .hint{font-size:11.5px;color:var(--muted);margin:0 0 10px;line-height:1.4;}
 </style>
 </head>
@@ -138,6 +154,7 @@ const BODY_SHELL=`<header>
 </header>
 <main><div class="grid" id="grid"></div></main>
 <div class="dial" id="dial" hidden>
+<div class="dial-item"><span class="dial-label">Lupulex</span><button class="mini-fab" id="dialHop" aria-label="Lupulex"></button></div>
 <div class="dial-item"><span class="dial-label">Capturar levedura</span><button class="mini-fab" id="dialCap" aria-label="Capturar levedura"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l2-3h6l2 3h3v11H4z"/><circle cx="12" cy="13" r="3.5"/></svg></button></div>
 <div class="dial-item"><span class="dial-label">Configurações</span><button class="mini-fab" id="dialSet" aria-label="Configurações">\u2699</button></div>
 </div>
@@ -158,6 +175,7 @@ const BODY_SHELL=`<header>
 </div>
 <div class="overlay" id="overlay" hidden></div>
 <div class="sheet modal" id="detailModal" hidden></div>
+<div class="sheet modal hop" id="hopModal" hidden></div>
 <div class="toast" id="toast" hidden></div>
 <input type="file" id="camInput" accept="image/*" capture="environment" hidden>
 <input type="file" id="picInput" accept="image/*" hidden>
@@ -342,6 +360,22 @@ fabBtn.onclick=()=>{
 document.getElementById('dialSet').onclick=()=>{dial.hidden=true;fabPanel.removeAttribute('hidden');fabBtn.setAttribute('aria-expanded','true');};
 document.getElementById('dialCap').onclick=()=>{closeDial();camInput.click();};
 document.addEventListener('click',e=>{if(dial.hidden)return;if(!e.target.closest('#dial,#fabBtn'))closeDial();});
+function hopSvg(sz){
+  const rows=[[32,[44,56]],[46,[38,50,62]],[60,[37,50,63]],[74,[43,57]],[88,[50]]];
+  let g='';
+  rows.forEach((r,i)=>{r[1].forEach((cx,j)=>{g+='<ellipse cx="'+cx+'" cy="'+r[0]+'" rx="12" ry="10" fill="'+((i+j)%2?'#5F8040':'#7A9B52')+'" stroke="#2F4A22" stroke-width="2"/>';});});
+  return '<svg viewBox="0 0 100 104" width="'+sz+'" height="'+Math.round(sz*1.04)+'" aria-hidden="true"><path d="M50 22C50 14 52 9 57 4" stroke="#2F4A22" stroke-width="3" fill="none" stroke-linecap="round"/><path d="M52 13q14-8 22 2q-12 8-22-2z" fill="#6E9448" stroke="#2F4A22" stroke-width="2"/>'+g+'</svg>';
+}
+const hopModal=document.getElementById('hopModal');
+document.getElementById('dialHop').innerHTML=hopSvg(24);
+function openHop(){
+  hopModal.innerHTML='<div class="hop-bg"><span>'+hopSvg(46)+'</span><span>'+hopSvg(34)+'</span><span>'+hopSvg(56)+'</span></div><div class="hop-hero">'+hopSvg(88)+'</div><h3 class="hop-title">Lupulex</h3><p class="hop-lead">Em breve publicaremos o Lupulex, sua dex dos lúpulos!</p><p class="hop-nerd">Alfa-ácidos calibrados, mirceno em repouso e cones de Cascade esperando a fervura. Hoje o app está em dry hop: dia 3 de 5.</p><div class="hop-bar" role="img" aria-label="Progresso: 60%"><span></span></div><div class="sheet-actions"><button class="btn-primary" data-act="close">Fechar</button></div>';
+  dial.hidden=true;fabBtn.setAttribute('aria-expanded','false');
+  overlay.hidden=false;hopModal.hidden=false;
+}
+function closeHop(){overlay.hidden=true;hopModal.hidden=true;}
+document.getElementById('dialHop').onclick=openHop;
+hopModal.addEventListener('click',e=>{if(e.target.closest('[data-act="close"]'))closeHop();});
 document.querySelectorAll('.chip').forEach(chip=>{
   chip.onclick=()=>{
     document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
@@ -422,7 +456,7 @@ function openImport(){
 function closeImport(){overlay.hidden=true;importSheet.hidden=true;}
 importBtn.onclick=openImport;
 cancelImportBtn.onclick=closeImport;
-overlay.onclick=()=>{closeForm();closeImport();closeDetail();};
+overlay.onclick=()=>{closeForm();closeImport();closeDetail();closeHop();};
 
 document.getElementById('fillKnownBtn').onclick=()=>{importText.value=JSON.stringify(KNOWN,null,1);importMsg.textContent=KNOWN.length+' cepas preenchidas. Revise e toque em Adicionar.';};
 doImportBtn.onclick=async()=>{
