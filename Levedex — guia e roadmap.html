@@ -1,5 +1,40 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}</style><style>:root{color-scheme:light dark;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}@media (prefers-color-scheme:dark){:root:where(:not([data-theme="light"])){--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}}:root[data-theme="dark"]{color-scheme:dark;--md-bg:#0d0d0d;--md-text:rgba(255,255,255,.85);--md-muted:rgba(255,255,255,.6);--md-fill:rgba(255,255,255,.06);--md-fill-strong:rgba(255,255,255,.09);--md-rule:rgba(255,255,255,.14);--md-rule-strong:rgba(255,255,255,.22);--md-link:hsl(210 100% 72%)}:root[data-theme="light"]{color-scheme:light}@media print{:root,:root[data-theme="dark"]{color-scheme:light;--md-bg:#fff;--md-text:rgba(0,0,0,.8);--md-muted:rgba(0,0,0,.6);--md-fill:rgba(0,0,0,.04);--md-fill-strong:rgba(0,0,0,.06);--md-rule:rgba(0,0,0,.1);--md-rule-strong:rgba(0,0,0,.16);--md-link:hsl(210 100% 45%)}}body{background:var(--md-bg);color:var(--md-text);max-width:720px;margin:0 auto;padding:32px;display:flex;flex-direction:column;gap:10px;font:14px/1.55 -apple-system,BlinkMacSystemFont,'SF Pro','Segoe UI',sans-serif;overflow-wrap:break-word}body>:first-child{margin-top:0}h1,h2,h3,h4,h5,h6{margin:6px 0 0;line-height:1.25;font-weight:600;text-wrap:balance}h1{font-size:1.35em}h2{font-size:1.15em;color:var(--md-muted)}h3,h4,h5,h6{font-size:1em}p,ul,ol,blockquote,table,pre,hr{margin:0}strong{font-weight:600}a{color:var(--md-link);text-decoration:none}a:hover{text-decoration:underline}ul,ol{display:flex;flex-direction:column;gap:6px;padding-left:22px}ul{list-style:disc}ol{list-style:decimal}:is(li,td,th)>*+:is(p,ul,ol,blockquote){margin-top:6px}blockquote{display:flex;flex-direction:column;gap:10px;border-left:2px solid var(--md-rule);padding-left:10px;color:var(--md-muted)}:not(pre)>code{background:var(--md-fill);padding:1px 3px;border-radius:4px;font:.92em 'SF Mono',ui-monospace,Menlo,Consolas,monospace}a>code{background:none;color:inherit}pre{background:var(--md-fill);padding:10px 12px;border-radius:6px;overflow-x:auto;font:12px/1.5 'SF Mono',ui-monospace,Menlo,Consolas,monospace;margin-block:4px}pre code{background:none;padding:0;font:inherit}table{width:100%;border-collapse:separate;border-spacing:2px;font:inherit}th,td{padding:6px 8px;border-radius:3px;text-align:left;vertical-align:top}th{background:var(--md-fill-strong);font-weight:600}td{background:var(--md-fill)}:is(th,td) :not(pre)>code{background:transparent}hr{border:0;border-top:1px solid var(--md-rule-strong);margin-block:10px}img{max-width:100%;height:auto;border-radius:4px}</style>
-</head><body>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Levedex — guia e roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F3ECDD;--surface:#FFFDF8;--surface2:#EFE4CC;--text:#241C10;--muted:#6B5D45;--line:#D9CBA8;--amber:#B8860B;}
+@media (prefers-color-scheme:dark){:root{--bg:#14100D;--surface:#1F1810;--surface2:#2A2015;--text:#EDE6D6;--muted:#A89A82;--line:#34291A;--amber:#D9A62E;}}
+*{box-sizing:border-box;}
+body{margin:0;background:var(--bg);color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;padding:env(safe-area-inset-top,0px) 0 env(safe-area-inset-bottom,0px);}
+main{max-width:720px;margin:0 auto;padding:22px 18px 60px;}
+.back{display:inline-block;margin-bottom:16px;padding:9px 16px;border-radius:20px;background:var(--text);color:var(--bg);font-size:14px;text-decoration:none;}
+.back:focus-visible,a:focus-visible{outline:2px solid var(--amber);outline-offset:2px;}
+h1,h2{font-family:'Fraunces',Georgia,serif;line-height:1.2;}
+h1{font-size:clamp(28px,7vw,38px);margin:0 0 10px;}
+h2{font-size:22px;margin:32px 0 10px;padding-top:6px;border-top:1px solid var(--line);}
+p{margin:0 0 12px;}
+ul{padding-left:20px;margin:0 0 14px;}
+li{margin:6px 0;}
+li.todo{list-style:none;margin-left:-20px;}
+.box{color:var(--amber);margin-right:4px;}
+li.done{color:var(--muted);}
+code{background:var(--surface2);padding:1px 6px;border-radius:5px;font-size:.9em;overflow-wrap:anywhere;}
+del{color:var(--muted);}
+.tw{overflow-x:auto;margin:0 0 16px;}
+table{border-collapse:collapse;width:100%;font-size:14px;}
+th,td{text-align:left;padding:7px 10px;border-bottom:1px solid var(--line);white-space:nowrap;}
+th{background:var(--surface2);}
+</style>
+</head>
+<body>
+<main>
+<a class="back" href="./Levedex.html">Voltar ao Levedex</a>
 <h1>Levedex — guia e roadmap</h1>
 <p>Catálogo interativo de 10 cepas de levedura cervejeira, publicado como página HTML autônoma. Este documento cobre o funcionamento atual e possíveis próximos passos.</p>
 <h2>Como usar</h2>
@@ -7,7 +42,7 @@
 <ul>
 <li><strong>Filtro</strong> — Todas / Grátis / Premium.</li>
 <li><strong>Ocultar texto</strong> — remove nome, fabricante, estilo e valores numéricos, mantendo símbolo de raridade, selo grátis/premium e as barras de estatística. Serve para leitura puramente visual do catálogo.</li>
-<li><strong>Sobre</strong> — seção recolhível no fim do FAB com os links do projeto: Instagram @softbrewers, wilker.dev e levedex.vercel.app.</li>
+<li><strong>Sobre</strong> — seção recolhível no fim do FAB com os links do projeto: Roadmap e versões (link relativo para <code>Levedex — guia e roadmap.html</code>, na mesma pasta do <code>Levedex.html</code>), Instagram @softbrewers, wilker.dev e levedex.vercel.app.</li>
 </ul>
 <h2>Como ler um card</h2>
 <ul>
@@ -18,118 +53,37 @@
 <li><strong>Ilustração</strong> — desenhada em SVG conforme o tipo (sachê para grátis, tubo para premium) e colorida por categoria de estilo. O formulário aceita uma URL de imagem https opcional (campo <code>img</code> no JSON); a página publicada no Claude bloqueia imagens externas, então nela vale o desenho.</li>
 </ul>
 <h2>Cepas catalogadas</h2>
-<table>
-<thead>
-<tr>
-<th>Nº</th>
-<th>Cepa</th>
-<th>Fabricante</th>
-<th>Status</th>
-<th>Raridade</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>001</td>
-<td>US-05</td>
-<td>Fermentis</td>
-<td>Grátis</td>
-<td>Comum</td>
-</tr>
-<tr>
-<td>002</td>
-<td>S-04</td>
-<td>Fermentis</td>
-<td>Grátis</td>
-<td>Comum</td>
-</tr>
-<tr>
-<td>003</td>
-<td>Nottingham</td>
-<td>Lallemand</td>
-<td>Grátis</td>
-<td>Comum</td>
-</tr>
-<tr>
-<td>004</td>
-<td>W-34/70</td>
-<td>Fermentis</td>
-<td>Grátis</td>
-<td>Incomum</td>
-</tr>
-<tr>
-<td>005</td>
-<td>WB-06</td>
-<td>Fermentis</td>
-<td>Grátis</td>
-<td>Incomum</td>
-</tr>
-<tr>
-<td>006</td>
-<td>WLP001</td>
-<td>White Labs</td>
-<td>Premium</td>
-<td>Rara</td>
-</tr>
-<tr>
-<td>007</td>
-<td>London Ale III</td>
-<td>Wyeast 1318</td>
-<td>Premium</td>
-<td>Dupla Rara</td>
-</tr>
-<tr>
-<td>008</td>
-<td>&quot;Trois&quot;</td>
-<td>Wyeast 3724</td>
-<td>Premium</td>
-<td>Ultra Rara</td>
-</tr>
-<tr>
-<td>009</td>
-<td>Hornindal</td>
-<td>Omega OYL-071</td>
-<td>Premium</td>
-<td>Rara Ilustração</td>
-</tr>
-<tr>
-<td>010</td>
-<td>Zematic</td>
-<td>Imperial B44</td>
-<td>Premium</td>
-<td>Hyper Rara</td>
-</tr>
-</tbody>
-</table>
+<div class="tw"><table><thead><tr><th>Nº</th><th>Cepa</th><th>Fabricante</th><th>Status</th><th>Raridade</th></tr></thead><tbody><tr><td>001</td><td>US-05</td><td>Fermentis</td><td>Grátis</td><td>Comum</td></tr><tr><td>002</td><td>S-04</td><td>Fermentis</td><td>Grátis</td><td>Comum</td></tr><tr><td>003</td><td>Nottingham</td><td>Lallemand</td><td>Grátis</td><td>Comum</td></tr><tr><td>004</td><td>W-34/70</td><td>Fermentis</td><td>Grátis</td><td>Incomum</td></tr><tr><td>005</td><td>WB-06</td><td>Fermentis</td><td>Grátis</td><td>Incomum</td></tr><tr><td>006</td><td>WLP001</td><td>White Labs</td><td>Premium</td><td>Rara</td></tr><tr><td>007</td><td>London Ale III</td><td>Wyeast 1318</td><td>Premium</td><td>Dupla Rara</td></tr><tr><td>008</td><td>"Trois"</td><td>Wyeast 3724</td><td>Premium</td><td>Ultra Rara</td></tr><tr><td>009</td><td>Hornindal</td><td>Omega OYL-071</td><td>Premium</td><td>Rara Ilustração</td></tr><tr><td>010</td><td>Zematic</td><td>Imperial B44</td><td>Premium</td><td>Hyper Rara</td></tr></tbody></table></div>
 <h2>Dados: CRUD e importação</h2>
 <ul>
 <li><strong>Modo edição</strong> — switch no FAB. Ativo, tocar um card abre o formulário preenchido para editar ou excluir.</li>
 <li><strong>Adicionar cepa</strong> — botão no FAB, abre o mesmo formulário vazio.</li>
-<li><strong>Campos do formulário</strong> — nome, fabricante, estilo, status, raridade, atenuação (&quot;min-max&quot;), floculação (select), ABV, temperatura, nota. Nome/fabricante/estilo são obrigatórios; o resto aceita vazio.</li>
-<li><strong>Importar JSON</strong> — botão no FAB, abre um campo de texto para colar um array de objetos (mesmos campos do formulário, em inglês: <code>name</code>, <code>maker</code>, <code>style</code>, <code>status</code>, <code>tier</code>, <code>atn</code>, <code>floc</code>, <code>abv</code>, <code>temp</code>, <code>note</code>). Cada item vira uma cepa nova, numerada em sequência; não substitui o catálogo existente. Itens com mesmo nome e fabricante de uma cepa já existente são ignorados. O botão &quot;Preencher com as 29 cepas mapeadas&quot; cola no campo o lote conhecido (cepas 011 a 039) para revisão antes de adicionar.</li>
-<li><strong>Capturar levedura</strong> — o FAB principal abre um leque (speed dial) com três mini-botões separados: Lupulex (modal &quot;em breve&quot; do futuro app de lúpulos), Capturar levedura, que abre a câmera do aparelho, e Configurações, que abre o painel de busca, filtros e ferramentas. Tocar de novo no FAB fecha tudo. A foto é reduzida (até 480 px, JPEG) e vira uma entrada &quot;A conferir&quot; com nome &quot;Sem nome&quot;, sem estatísticas; o filtro &quot;A conferir&quot; no FAB lista só as pendentes. Tocar na entrada e em Editar abre o formulário com a foto; nome, fabricante e estilo são obrigatórios, e salvar remove a marca de pendente. O botão Foto do formulário troca a foto (câmera ou galeria) e tocar na miniatura remove.</li>
+<li><strong>Campos do formulário</strong> — nome, fabricante, estilo, status, raridade, atenuação ("min-max"), floculação (select), ABV, temperatura, nota. Nome/fabricante/estilo são obrigatórios; o resto aceita vazio.</li>
+<li><strong>Importar JSON</strong> — botão no FAB, abre um campo de texto para colar um array de objetos (mesmos campos do formulário, em inglês: <code>name</code>, <code>maker</code>, <code>style</code>, <code>status</code>, <code>tier</code>, <code>atn</code>, <code>floc</code>, <code>abv</code>, <code>temp</code>, <code>note</code>). Cada item vira uma cepa nova, numerada em sequência; não substitui o catálogo existente. Itens com mesmo nome e fabricante de uma cepa já existente são ignorados. O botão "Preencher com as 29 cepas mapeadas" cola no campo o lote conhecido (cepas 011 a 039) para revisão antes de adicionar.</li>
+<li><strong>Capturar levedura</strong> — o FAB principal abre um leque (speed dial) com três mini-botões separados: Lupulex (modal "em breve" do futuro app de lúpulos), Capturar levedura, que abre a câmera do aparelho, e Configurações, que abre o painel de busca, filtros e ferramentas. Tocar de novo no FAB fecha tudo. A foto é reduzida (até 480 px, JPEG) e vira uma entrada "A conferir" com nome "Sem nome", sem estatísticas; o filtro "A conferir" no FAB lista só as pendentes. Tocar na entrada e em Editar abre o formulário com a foto; nome, fabricante e estilo são obrigatórios, e salvar remove a marca de pendente. O botão Foto do formulário troca a foto (câmera ou galeria) e tocar na miniatura remove.</li>
 <li><strong>Persistência</strong> — ao salvar, editar, excluir ou importar, a página republica a si mesma com os dados atualizados (capacidade <code>artifact</code> do runtime de Artifacts). Qualquer pessoa com o link vê a versão mais recente ao recarregar. Sem esse mecanismo (pré-visualização, ou visualizador sem permissão de escrita), as alterações ficam só na aba aberta.</li>
 <li>Edições simultâneas de duas pessoas não são mescladas: quem publica por último vence, silenciosamente.</li>
 </ul>
 <h2>Roadmap (possível)</h2>
 <ul>
-<li><input checked="" disabled="" type="checkbox"> <del>Separar os dados das cepas do HTML</del> — resolvido de outro jeito: dados seguem embutidos, mas agora editáveis in-place com persistência via publish; dispensa arquivo externo para esse fim.</li>
-<li><input checked="" disabled="" type="checkbox"> <del>Persistir filtro e estado de &quot;ocultar texto&quot;</del> — superado: o catálogo inteiro persiste agora, não só preferências de UI.</li>
-<li><input disabled="" type="checkbox"> Expandir o catálogo: trapistas belgas (Chimay, Westmalle), blends sour (Lacto + Brett), Ringwood (Wyeast 1187), Kölsch (Wyeast 2565).</li>
-<li><input disabled="" type="checkbox"> Alternância manual claro/escuro dentro do próprio FAB, complementando o <code>prefers-color-scheme</code> automático atual.</li>
-<li><input disabled="" type="checkbox"> Modo comparação: duas cepas lado a lado.</li>
-<li><input checked="" disabled="" type="checkbox"> <del>Campo de busca por nome ou estilo</del> — feito: campo no topo do FAB, filtra por nº, nome, fabricante, estilo e nota, sem diferenciar acentos; combina com o filtro grátis/premium.</li>
-<li><input disabled="" type="checkbox"> Data de verificação por cepa, para rastrear quando a ficha técnica foi conferida pela última vez.</li>
-<li><input disabled="" type="checkbox"> Exportar catálogo atual como JSON, simétrico à importação.</li>
-<li><input disabled="" type="checkbox"> Aviso de edição concorrente, já que a publicação mais recente vence sem aviso.</li>
-<li><input disabled="" type="checkbox"> Tratamento próprio para cervejas sem álcool e baixo teor: atenuação deixa de ser a métrica relevante nessas cepas (hoje entram como &quot;A conferir&quot;, sem estatísticas).</li>
-<li><input disabled="" type="checkbox"> Backend próprio (Supabase ou Firebase) para sincronizar catálogo e fotos entre aparelhos e tirar as fotos de dentro do HTML. Fora do escopo da v0.2, que segue sem backend.</li>
-<li><input disabled="" type="checkbox"> Lupulex: app separado, a &quot;dex dos lúpulos&quot;; por ora só o modal de aviso no leque do Levedex.</li>
+<li class="todo done"><span class="box">☑</span> <del>Separar os dados das cepas do HTML</del> — resolvido de outro jeito: dados seguem embutidos, mas agora editáveis in-place com persistência via publish; dispensa arquivo externo para esse fim.</li>
+<li class="todo done"><span class="box">☑</span> <del>Persistir filtro e estado de "ocultar texto"</del> — superado: o catálogo inteiro persiste agora, não só preferências de UI.</li>
+<li class="todo"><span class="box">☐</span> Expandir o catálogo: trapistas belgas (Chimay, Westmalle), blends sour (Lacto + Brett), Ringwood (Wyeast 1187), Kölsch (Wyeast 2565).</li>
+<li class="todo"><span class="box">☐</span> Alternância manual claro/escuro dentro do próprio FAB, complementando o <code>prefers-color-scheme</code> automático atual.</li>
+<li class="todo"><span class="box">☐</span> Modo comparação: duas cepas lado a lado.</li>
+<li class="todo done"><span class="box">☑</span> <del>Campo de busca por nome ou estilo</del> — feito: campo no topo do FAB, filtra por nº, nome, fabricante, estilo e nota, sem diferenciar acentos; combina com o filtro grátis/premium.</li>
+<li class="todo"><span class="box">☐</span> Data de verificação por cepa, para rastrear quando a ficha técnica foi conferida pela última vez.</li>
+<li class="todo"><span class="box">☐</span> Exportar catálogo atual como JSON, simétrico à importação.</li>
+<li class="todo"><span class="box">☐</span> Aviso de edição concorrente, já que a publicação mais recente vence sem aviso.</li>
+<li class="todo"><span class="box">☐</span> Tratamento próprio para cervejas sem álcool e baixo teor: atenuação deixa de ser a métrica relevante nessas cepas (hoje entram como "A conferir", sem estatísticas).</li>
+<li class="todo"><span class="box">☐</span> Backend próprio (Supabase ou Firebase) para sincronizar catálogo e fotos entre aparelhos e tirar as fotos de dentro do HTML. Fora do escopo da v0.2, que segue sem backend.</li>
+<li class="todo"><span class="box">☐</span> Lupulex: app separado, a "dex dos lúpulos"; por ora só o modal de aviso no leque do Levedex.</li>
 </ul>
 <h2>Versões</h2>
 <ul>
 <li><strong>v0.1</strong> — catálogo de 10 cepas, filtro grátis/premium, ocultar texto, FAB.</li>
-<li><strong>v0.2</strong> — CRUD, importação em massa por JSON com botão das 29 cepas mapeadas, busca, modal de detalhes com ilustrações SVG, campo de imagem opcional, captura por foto com fila &quot;A conferir&quot;, seção Sobre e 8 cepas de cerveja sem álcool e baixo teor (com dados estimados, a conferir via issues no GitHub: Ferm LA01, WLP618, LalBrew LoNa, WLP686, WLP603, NAY, WLP4650, NEER).</li>
+<li><strong>v0.2</strong> — CRUD, importação em massa por JSON com botão das 29 cepas mapeadas, busca, modal de detalhes com ilustrações SVG, campo de imagem opcional, captura por foto com fila "A conferir", seção Sobre e 8 cepas de cerveja sem álcool e baixo teor (com dados estimados, a conferir via issues no GitHub: Ferm LA01, WLP618, LalBrew LoNa, WLP686, WLP603, NAY, WLP4650, NEER).</li>
 </ul>
-
-</body></html>
+</main>
+</body>
+</html>
